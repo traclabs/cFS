@@ -24,7 +24,7 @@
         branch = master
 [submodule "apps/sch_lab"]
 	path = apps/sch_lab
-	url = https://github.com/traclabs/sch_lab.git
+	url = git@github.com:traclabs/sch_lab.git
         branch = master
 [submodule "apps/to_lab"]
 	path = apps/to_lab
