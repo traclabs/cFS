@@ -30,6 +30,7 @@
 #ifndef _ros_app_msgids_h_
 #define _ros_app_msgids_h_
 
+#define ROS_APP_MSG_CMD_MID 0x1115
 #define ROS_APP_CMD_MID     0x1696
 #define ROS_APP_SEND_HK_MID 0x1697
 #define ROS_APP_HK_TLM_MID  0x0697

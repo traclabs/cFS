@@ -81,12 +81,24 @@ void ROS_APP_Main(void)
         CFE_ES_PerfLogExit(ROS_APP_PERF_ID);
 
         /* Pend on receipt of command packet */
-        status = CFE_SB_ReceiveBuffer(&SBBufPtr, ROS_APP_Data.CommandPipe, CFE_SB_PEND_FOREVER);
+        status = CFE_SB_ReceiveBuffer(&SBBufPtr, ROS_APP_Data.CommandPipe, CFE_SB_PEND_FOREVER); // CFE_SB_PEND_FOREVER);
 
         /*
         ** Performance Log Entry Stamp
         */
         CFE_ES_PerfLogEntry(ROS_APP_PERF_ID);
+
+        // ROS_APP_Data.HkTlm.Payload.text[0] = 'h';
+        // ROS_APP_Data.HkTlm.Payload.text[1] = 'e';
+        // ROS_APP_Data.HkTlm.Payload.text[2] = 'l';
+        // ROS_APP_Data.HkTlm.Payload.text[3] = 'l';
+        // ROS_APP_Data.HkTlm.Payload.text[4] = 'o';
+        // printf("ROS_APP_ReportHousekeeping() -- sending text: \'%s\'\n", ROS_APP_Data.HkTlm.Payload.text);
+        // /*
+        // ** Send housekeeping telemetry packet...
+        // */
+        // CFE_SB_TimeStampMsg(&ROS_APP_Data.HkTlm.TlmHeader.Msg);
+        // CFE_SB_TransmitMsg(&ROS_APP_Data.HkTlm.TlmHeader.Msg, true);
 
         if (status == CFE_SUCCESS)
         {
@@ -99,6 +111,29 @@ void ROS_APP_Main(void)
 
             ROS_APP_Data.RunStatus = CFE_ES_RunStatus_APP_ERROR;
         }
+
+        
+        // printf("R0S_APP_MAIN() -- creating a msg to send to the sim...\n");
+
+        // send the ROS_APP_MSG_CMD_MID code that is subscribed from the robot sim
+        CFE_MSG_CommandHeader_t CmdMsg;
+        CFE_MSG_Init((CFE_MSG_Message_t *)&CmdMsg, ROS_APP_MSG_CMD_MID, sizeof(CmdMsg));
+        CFE_MSG_SetFcnCode((CFE_MSG_Message_t *)&CmdMsg, ROS_APP_PROCESS_CC);
+        CFE_Status_t CFE_Status = CFE_SB_TransmitMsg((CFE_MSG_Message_t *)&CmdMsg, true);
+        if (CFE_Status == CFE_SUCCESS)
+        {
+            printf("ROS_APP_Main() -- sent new message to robot sim...\n");
+        }
+        else 
+        {
+            if (CFE_Status == CFE_SB_BAD_ARGUMENT)
+                printf("ROS_APP_Main() -- CFE_SB_BAD_ARGUMENT error\n");
+            else if (CFE_Status == CFE_SB_MSG_TOO_BIG)
+                printf("ROS_APP_Main() -- CFE_SB_MSG_TOO_BIG error\n");
+            else if (CFE_Status == CFE_SB_BUF_ALOC_ERR)
+                printf("ROS_APP_Main() -- some other error (shouldn't be here)\n");
+        }
+        
     }
 
     /*
@@ -170,10 +205,14 @@ int32 ROS_APP_Init(void)
     */
     CFE_MSG_Init(&ROS_APP_Data.HkTlm.TlmHeader.Msg, ROS_APP_HK_TLM_MID, sizeof(ROS_APP_Data.HkTlm));
 
+    // CFE_MSG_Init(&ROS_APP_Data.RosCmd.CmdHeader.Msg, ROS_APP_MSG_CMD_MID, sizeof(ROS_APP_Data.RosCmd));
+
     /*
     ** Create Software Bus message pipe.
     */
+    CFE_MSG_Init(&ROS_APP_Data.HkTlm.TlmHeader.Msg, ROS_APP_HK_TLM_MID, sizeof(ROS_APP_Data.HkTlm));
     status = CFE_SB_CreatePipe(&ROS_APP_Data.CommandPipe, ROS_APP_Data.PipeDepth, ROS_APP_Data.PipeName);
+    status = CFE_SB_Subscribe(ROS_APP_SEND_HK_MID, ROS_APP_Data.CommandPipe);
     if (status != CFE_SUCCESS)
     {
         CFE_ES_WriteToSysLog("ros App: Error creating pipe, RC = 0x%08lX\n", (unsigned long)status);
@@ -330,12 +369,19 @@ int32 ROS_APP_ReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg)
 {
   int i;
   
+    printf("ROS_APP_ReportHousekeeping() -- doing some housekeeping...\n");
+
     /*
     ** Get command execution counters...
     */
     ROS_APP_Data.HkTlm.Payload.CommandErrorCounter = ROS_APP_Data.ErrCounter;
     ROS_APP_Data.HkTlm.Payload.CommandCounter      = ROS_APP_Data.CmdCounter;
-
+    // ROS_APP_Data.HkTlm.Payload.text[0] = 'h';
+    // ROS_APP_Data.HkTlm.Payload.text[1] = 'e';
+    // ROS_APP_Data.HkTlm.Payload.text[2] = 'l';
+    // ROS_APP_Data.HkTlm.Payload.text[3] = 'l';
+    // ROS_APP_Data.HkTlm.Payload.text[4] = 'o';
+    // printf("ROS_APP_ReportHousekeeping() -- sending text: \'%s\'\n", ROS_APP_Data.HkTlm.Payload.text);
     /*
     ** Send housekeeping telemetry packet...
     */

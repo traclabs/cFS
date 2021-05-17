@@ -30,11 +30,10 @@
 #ifndef _robot_sim_msgids_h_
 #define _robot_sim_msgids_h_
 
-#define ROBOT_SIM_SBN_CMD_ID  0x1115
-#define ROBOT_SIM_CMDID_1     0x1234
-#define ROBOT_SIM_CMD_MID     0x1696
-#define ROBOT_SIM_SEND_HK_MID 0x1697
-#define ROBOT_SIM_HK_TLM_MID  0x0697
+#define ROBOT_SIM_MSG_CMD_MID 0x1116
+#define ROBOT_SIM_CMD_MID     0x1717
+#define ROBOT_SIM_SEND_HK_MID 0x1715
+#define ROBOT_SIM_HK_TLM_MID  0x0715
 
 #endif /* _robot_sim_msgids_h_ */
 

@@ -72,6 +72,7 @@ typedef struct
     ** Housekeeping telemetry packet...
     */
     ROS_APP_HkTlm_t HkTlm;
+    ROS_APP_ProcessCmd_t RosCmd;
 
     /*
     ** Run Status variable used in the main processing loop

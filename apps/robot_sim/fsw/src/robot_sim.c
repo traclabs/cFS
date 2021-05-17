@@ -48,6 +48,8 @@ void RobotSimMain(void)
 {
     int32            status;
     // CFE_SB_Buffer_t *SBBufPtr;
+    CFE_SB_Buffer_t *RosAppBufPtr;
+    // CFE_MSG_Message_t *MsgPtr    = 0;
 
     /*
     ** Register the app with Executive services
@@ -65,14 +67,11 @@ void RobotSimMain(void)
     ** CFE_ES_RunStatus_APP_ERROR and the App will not enter the RunLoop
     */
     status = RobotSimInit();
+
     if (status != CFE_SUCCESS)
     {
         RobotSimData.RunStatus = CFE_ES_RunStatus_APP_ERROR;
     }
-
-
-    // CFE_SB_Buffer_t *RosSBNPtr;
-    CFE_SB_Buffer_t *RosCmdPtr;
 
     /*
     ** ros Runloop
@@ -85,52 +84,40 @@ void RobotSimMain(void)
         CFE_ES_PerfLogExit(ROBOT_SIM_PERF_ID);
 
         /* Pend on receipt of command packet */
-        // status = CFE_SB_ReceiveBuffer(&SBBufPtr, RobotSimData.CommandPipe, CFE_SB_POLL); //CFE_SB_PEND_FOREVER
+        // status = CFE_SB_ReceiveBuffer(&SBBufPtr, RobotSimData.CommandPipe, CFE_SB_PEND_FOREVER); //CFE_SB_POLL CFE_SB_PEND_FOREVER
 
+
+        /*
+        ** Send payload...
+        */
+        // starting to send the changning joint states
+        // using random values 0-9 for now because that's easy to asciify for wireshark
+        // RobotSimData.HkTlm.Payload.str[0] = 'H';
+        // RobotSimData.HkTlm.Payload.str[1] = 'i';
+        // RobotSimData.HkTlm.Payload.str[2] = '!';
+        // for (uint8 i = 0; i < ROBOT_SIM_DOF; ++i)
+        // {
+        //     // RobotSimData.HkTlm.Payload.joint_state[i].position = (float)rand()/(float)(RAND_MAX/1.57);
+        //     // printf("RobotSimInit() -- randomized joint state[%d]: %g\n", i, RobotSimData.HkTlm.Payload.joint_state[i].position);
+        //     RobotSimData.HkTlm.Payload.joint_state[i].position = rand()%9 + '0';
+        //     printf("RobotSimInit() -- randomized joint state[%d] to %c\n", i, RobotSimData.HkTlm.Payload.joint_state[i].position);
+        // }
+
+        // CFE_SB_TimeStampMsg(&RobotSimData.HkTlm.TlmHeader.Msg);
+        // CFE_SB_TransmitMsg(&RobotSimData.HkTlm.TlmHeader.Msg, true);
 
         /*
         ** Performance Log Entry Stamp
         */
         // CFE_ES_PerfLogEntry(ROBOT_SIM_PERF_ID);
 
+        // commented out for now, should add this back in later as it handles commands and telemetry
         // if (status == CFE_SUCCESS)
         // {
         //     RobotSimProcessCommandPacket(SBBufPtr);
         // }
         // else
         // {
-        //     // CFE_EVS_SendEvent(ROBOT_SIM_PIPE_ERR_EID, CFE_EVS_EventType_ERROR,
-        //     //                   "Robot Sim: SB Pipe Read Error, App Will Exit");
-
-        //     // RobotSimData.RunStatus = CFE_ES_RunStatus_APP_ERROR;
-        // }
-     
-
-        // // adding to test the new SBN pipe
-        // /*
-        // ** Get command execution counters...
-        // */
-        // RobotSimData.RosHk.ErrCounter = RobotSimData.ErrCounter;
-        // RobotSimData.RosHk.CmdCounter      = RobotSimData.CmdCounter;
-
-        // /*
-        // ** Send housekeeping telemetry packet...
-        // */
-        // CFE_SB_TimeStampMsg(&RobotSimData.RosHk.TlmHeader.Msg);
-        // CFE_SB_TransmitMsg(&RobotSimData.RosHk.TlmHeader.Msg, true);
-
-        // status = CFE_SB_ReceiveBuffer(&RosSBNPtr, RobotSimData.RobotSimPipe_1, CFE_SB_POLL);
-        // if (status == CFE_SUCCESS)
-        // {
-        //     RobotSimProcessSBN(RosSBNPtr);
-        // }
-        // else if (status == CFE_SB_TIME_OUT)
-        // {
-        //     printf("\nWE TIMED OUT WAITING\n");
-        // }
-        // else
-        // {
-        //     printf("\nbad msg 0x%08lX\n", (unsigned long)status);
         //     CFE_EVS_SendEvent(ROBOT_SIM_PIPE_ERR_EID, CFE_EVS_EventType_ERROR,
         //                       "Robot Sim: SB Pipe Read Error, App Will Exit");
 
@@ -138,126 +125,19 @@ void RobotSimMain(void)
         // }
 
 
-        // 5/12 adding to test the new SBN command pipe
-        /*
-        ** Send cmd packet...
-        theirs:
-        CFE_MSG_CommandHeader_t CmdMsg;
-        CFE_MSG_Init((CFE_MSG_Message_t *)&CmdMsg, CFE_SB_SUB_RPT_CTRL_MID, sizeof(CmdMsg));
-        CFE_MSG_SetFcnCode((CFE_MSG_Message_t *)&CmdMsg, CFE_SB_ENABLE_SUB_REPORTING_CC);
-        CFE_MSG_Init(&RobotSimData.SbnCmd.CmdHeader.Msg, ROBOT_SIM_SBN_CMD_ID, sizeof(RobotSimData.SbnCmd));
-        */
-
-        // printf("\nBIG TEST\n");
-        // CFE_MSG_CommandHeader_t cmd;
-        // CFE_MSG_Message_t      *msgptr  = &cmd.Msg;
-        // CFE_MSG_FcnCode_t       val  = 0x11;
-        // CFE_MSG_FcnCode_t       actual  = 0x7F;
-
-        // CFE_MSG_SetType(msgptr, CFE_MSG_Type_Cmd);
-        // CFE_MSG_SetHasSecondaryHeader(msgptr, true);
-
-        // int32 test = CFE_MSG_SetFcnCode(msgptr, val);
-        // if (test == CFE_SUCCESS)
-        // {
-        //     printf("good test\n");
-
-        //     int32 getter = CFE_MSG_GetFcnCode(msgptr, &actual);
-
-        //     if (getter == CFE_SUCCESS)
-        //         printf("\tyayy we got it == %d\n", actual);
-        //     else if (getter == CFE_MSG_BAD_ARGUMENT)
-        //         printf("bad getter: bad argument\n");
-        //     else // CFE_MSG_WRONG_MSG_TYPE)
-        //         printf("bad getter: wrong msg type\n");
-        // }
-        // else if (test == CFE_MSG_BAD_ARGUMENT)
-        //     printf("bad test: bad argument\n");
-        // else // CFE_MSG_WRONG_MSG_TYPE)
-        //     printf("bad test: wrong msg type\n");
-
-        // CFE_MSG_Type_t type;
-        // CFE_MSG_GetType(&RobotSimData.SbnCmd.CmdHeader.Msg, &type);
-        // if (type == CFE_MSG_Type_Tlm)
-        //     printf("TYPE IS TLM\n");
-        // else if (type == CFE_MSG_Type_Cmd)
-        //     printf("TYPE IS\n");
-        // else //CFE_MSG_Type_Invalid
-        //     printf("INVALID\n");
-
-        // printf("looking to see if our class msg has 2nd header\n");
-        // bool has = false;
-        // CFE_MSG_GetHasSecondaryHeader(&RobotSimData.SbnCmd.CmdHeader.Msg, &has);
-        // if (has)
-        // {
-        //     printf("WE HAVE A 2ND HEADER\n");
-        // }
-        // else
-        // {
-        //     printf("no 2nd header\n");
-        //     if (CFE_MSG_SetHasSecondaryHeader(&RobotSimData.SbnCmd.CmdHeader.Msg, true) != CFE_SUCCESS)
-        //         printf("FAILED TO SET 2ND HEADER\n");
-        // }
-        
-        // CFE_MSG_FcnCode_t cmd_code = 0x11;
-
-        // // CFE_MSG_CommandHeader_t CmdMsg;
-        // // CFE_MSG_Init(&CmdMsg.Msg, ROBOT_SIM_SBN_CMD_ID, sizeof(CmdMsg));
-        // // int32 set = CFE_MSG_SetFcnCode(&CmdMsg.Msg, cmd_code);        
-        
-        // int32 set = CFE_MSG_SetFcnCode(&RobotSimData.SbnCmd.CmdHeader.Msg, cmd_code);
-        // if (set != CFE_SUCCESS)
-        // {
-        //     if (set == CFE_MSG_BAD_ARGUMENT)
-        //         printf("CAN'T SET CMD: bad argument\n");
-        //     else if (set == CFE_MSG_WRONG_MSG_TYPE)
-        //         printf("CAN'T SET CMD: wrong msg type\n");
-        //     else
-        //         printf("CAN'T SET CMD: ?\n");
-        // }
-        // else
-        // {
-        //     printf("we finally set the fcn code, now sending on sbn...\n");
-        //     // CFE_SB_TransmitMsg(&RobotSimData.HkTlm.TlmHeader.Msg, true);
-
+        // wait for a new message from the ROS APP        
         printf("\n");
-
-        CFE_MSG_FcnCode_t test_code = 0x0;
-        int32 get = CFE_MSG_GetFcnCode(&RobotSimData.SbnCmd.CmdHeader.Msg, &test_code);
-        if (get != CFE_SUCCESS)
-        {
-            if (get == CFE_MSG_BAD_ARGUMENT)
-                printf("RobotSimMain() -- CAN'T GET CMD: bad argument\n");
-            else if (get == CFE_MSG_WRONG_MSG_TYPE)
-                printf("RobotSimMain() -- CAN'T GET CMD: wrong msg type\n");
-            else
-                printf("RobotSimMain() -- CAN'T GET CMD: ?\n");
-        }
-        else
-        {
-            printf("RobotSimMain() -- WE HAVE TEST CMD CODE VAL: %d\n", test_code);
-        }
-
-        printf("RobotSimMain() -- going to transmit msg now\n");
-
-        int32 ret = CFE_SB_TransmitMsg(&RobotSimData.SbnCmd.CmdHeader.Msg, true);
-        if (ret != CFE_SUCCESS)
-        {
-            printf("RobotSimMain() -- COULDN'T TRANSMIT MSG\n");
-            CFE_EVS_SendEvent(ROBOT_SIM_PIPE_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Robot Sim: SB Pipe Read Error, App Will Exit");
-
-            RobotSimData.RunStatus = CFE_ES_RunStatus_APP_ERROR;
-        }
-
-        status = CFE_SB_ReceiveBuffer(&RosCmdPtr, RobotSimData.RosSbnPipe, CFE_SB_PEND_FOREVER);
+        status = CFE_SB_ReceiveBuffer(&RosAppBufPtr, RobotSimData.RosPipe, CFE_SB_PEND_FOREVER); //CFE_SB_POLL CFE_SB_PEND_FOREVER
+        // status = CFE_SB_ReceiveBuffer((CFE_SB_Buffer_t **)&MsgPtr, RobotSimData.RosPipe, CFE_SB_PEND_FOREVER); //CFE_SB_POLL CFE_SB_PEND_FOREVER
         if (status == CFE_SUCCESS)
         {
-            RobotSimProcessCmd(RosCmdPtr);
+            printf("RobotSimMain() -- received msg\n");
+            RobotSimProcessRosApp(RosAppBufPtr);
+            // RobotSimProcessRosApp(MsgPtr);
         }
         else if (status == CFE_SB_TIME_OUT)
         {
-            printf("RobotSimMain() -- WE TIMED OUT WAITING FOR CMD\n");
+            printf("RobotSimMain() -- timed out!\n");
         }
         else
         {
@@ -272,7 +152,6 @@ void RobotSimMain(void)
 
             // RobotSimData.RunStatus = CFE_ES_RunStatus_APP_ERROR;
         }
-        // }
     }
 
     /*
@@ -339,61 +218,24 @@ int32 RobotSimInit(void)
         return (status);
     }
 
-    printf("\nHEY WE'RE INITing THE ROBOT SIM APP\n");
-
     /*
     ** Initialize housekeeping packet (clear user data area).
     */
     CFE_MSG_Init(&RobotSimData.HkTlm.TlmHeader.Msg, ROBOT_SIM_HK_TLM_MID, sizeof(RobotSimData.HkTlm));
-    
-    CFE_MSG_Init(&RobotSimData.RosHk.TlmHeader.Msg, ROBOT_SIM_CMDID_1, sizeof(RobotSimData.RosHk));
 
-    CFE_MSG_Init(&RobotSimData.SbnCmd.CmdHeader.Msg, ROBOT_SIM_SBN_CMD_ID, sizeof(RobotSimData.SbnCmd));
-
-    printf("looking to see if our class msg has 2nd header\n");
-    bool has = false;
-    CFE_MSG_GetHasSecondaryHeader(&RobotSimData.SbnCmd.CmdHeader.Msg, &has);
-    if (has)
+    // init the joint states
+    for (uint8 i = 0; i < ROBOT_SIM_DOF; ++i)
     {
-        printf("WE HAVE A 2ND HEADER\n");
-    }
-    else
-    {
-        printf("no 2nd header\n");
-        if (CFE_MSG_SetHasSecondaryHeader(&RobotSimData.SbnCmd.CmdHeader.Msg, true) != CFE_SUCCESS)
-            printf("FAILED TO SET 2ND HEADER\n");
-    }
-    
-    CFE_MSG_FcnCode_t cmd_code = 0x11;
-    int32 set = CFE_MSG_SetFcnCode(&RobotSimData.SbnCmd.CmdHeader.Msg, cmd_code);
-    if (set != CFE_SUCCESS)
-    {
-        if (set == CFE_MSG_BAD_ARGUMENT)
-            printf("CAN'T SET CMD: bad argument\n");
-        else if (set == CFE_MSG_WRONG_MSG_TYPE)
-            printf("CAN'T SET CMD: wrong msg type\n");
-        else
-            printf("CAN'T SET CMD: ?\n");
+        RobotSimJoint_t jnt;
+        // jnt.index = i;
+        // jnt.position = 0.0;
+        jnt.index = i + '0';
+        jnt.position = '0';
+        RobotSimData.HkTlm.Payload.joint_state[i] = jnt;
+        // printf("RobotSimInit() -- creating joint: %d out of %d with position: %g\n", i+1, ROBOT_SIM_DOF, jnt.position);
     }
 
-
-    CFE_MSG_FcnCode_t test_code = 0x0;
-    int32 get = CFE_MSG_GetFcnCode(&RobotSimData.SbnCmd.CmdHeader.Msg, &test_code);
-    if (get != CFE_SUCCESS)
-    {
-        if (get == CFE_MSG_BAD_ARGUMENT)
-            printf("CAN'T GET CMD: bad argument\n");
-        else if (get == CFE_MSG_WRONG_MSG_TYPE)
-            printf("CAN'T GET CMD: wrong msg type\n");
-        else
-            printf("CAN'T GET CMD: ?\n");
-    }
-    else
-    {
-        printf("WE FINALLY GOT THE CODE: %d\n", test_code);
-    }
-
-    printf("\njust created all of the msgs\n");
+    // CFE_MSG_Init(&RobotSimData.RobotCmd.CmdHeader.Msg, ROBOT_SIM_MSG_CMD_MID, sizeof(RobotSimData.RobotCmd));
 
     /*
     ** Create Software Bus message pipe.
@@ -427,55 +269,6 @@ int32 RobotSimInit(void)
     }
 
     /*
-    ** 5/11 new pipe testing
-    */
-    strncpy(RobotSimData.RosName, "ROBOT_SIM_SBN_PIPE", sizeof(RobotSimData.RosName));
-    RobotSimData.RosName[sizeof(RobotSimData.RosName) - 1] = 0;
-
-    status = CFE_SB_CreatePipe(&RobotSimData.RobotSimPipe_1, RobotSimData.PipeDepth, RobotSimData.RosName);
-    if (status != CFE_SUCCESS)
-    {
-        CFE_ES_WriteToSysLog("Robot Sim: Error creating ROS pipe, RC = 0x%08lX\n", (unsigned long)status);
-        return (status);
-    }
-
-    // printf("\nwe just created a NEW SBN pipe!\n");
-
-    // status = CFE_SB_SubscribeEx(ROBOT_SIM_CMDID_1, RobotSimData.RobotSimPipe_1, CFE_SB_DEFAULT_QOS, ROBOT_SIM_CMDID_1_LIMIT);
-    status = CFE_SB_Subscribe(ROBOT_SIM_CMDID_1, RobotSimData.RobotSimPipe_1);
-    if (status != CFE_SUCCESS)
-    {
-        CFE_ES_WriteToSysLog("Robot Sim: Error Subscribing to NEW PIPE request, RC = 0x%08lX\n", (unsigned long)status);
-        return (status);
-    }
-    // printf("\nwe just created a NEW SBN subEx pipe!\n");
-
-
-
-    /*
-    ** 5/12 new COMMAND MSG pipe testing
-    */
-    strncpy(RobotSimData.RosCmdName, "ROBOT_SIM_SBN_CMD", sizeof(RobotSimData.RosCmdName));
-    RobotSimData.RosCmdName[sizeof(RobotSimData.RosCmdName) - 1] = 0;
-
-    status = CFE_SB_CreatePipe(&RobotSimData.RosSbnPipe, RobotSimData.PipeDepth, RobotSimData.RosCmdName);
-    if (status != CFE_SUCCESS)
-    {
-        CFE_ES_WriteToSysLog("Robot Sim: Error creating ROS SBN pipe, RC = 0x%08lX\n", (unsigned long)status);
-        return (status);
-    }
-
-    printf("\nwe just created a NEW SBN COMMAND MSG TYPE pipe!\n");
-
-    status = CFE_SB_Subscribe(ROBOT_SIM_SBN_CMD_ID, RobotSimData.RosSbnPipe);
-    if (status != CFE_SUCCESS)
-    {
-        CFE_ES_WriteToSysLog("Robot Sim: Error Subscribing to NEW PIPE request, RC = 0x%08lX\n", (unsigned long)status);
-        return (status);
-    }
-    printf("\nwe just subscribed to the SBN CMD pipe!\n");
-
-    /*
     ** Register Table(s)
     */
     status = CFE_TBL_Register(&RobotSimData.TblHandles[0], "RobotSimTable", sizeof(RobotSimTable_t),
@@ -494,9 +287,36 @@ int32 RobotSimInit(void)
     CFE_EVS_SendEvent(ROBOT_SIM_STARTUP_INF_EID, CFE_EVS_EventType_INFORMATION, "Robot Sim Initialized.%s",
                       ROBOT_SIM_VERSION_STRING);
 
+    /*
+    ** create a pipe to get msg in from other cpu
+    */
+    strncpy(RobotSimData.RosPipeName, "ROBOT_SIM_ROS_PIPE", sizeof(RobotSimData.RosPipeName));
+    RobotSimData.RosPipeName[sizeof(RobotSimData.RosPipeName) - 1] = 0;
+
+    /*
+    ** Create ROS message pipe.
+    */
+    status = CFE_SB_CreatePipe(&RobotSimData.RosPipe, RobotSimData.PipeDepth, RobotSimData.RosPipeName);
+    if (status != CFE_SUCCESS)
+    {
+        CFE_ES_WriteToSysLog("Robot Sim: Error creating ROS pipe, RC = 0x%08lX\n", (unsigned long)status);
+        return (status);
+    }
+
+    /*
+    ** Subscribe to ros app commands
+    */
+    status = CFE_SB_Subscribe(ROS_APP_MSG_CMD_MID, RobotSimData.RosPipe);
+    if (status != CFE_SUCCESS)
+    {
+        CFE_ES_WriteToSysLog("Robot Sim: Error Subscribing to ROS APP messages, RC = 0x%08lX\n", (unsigned long)status);
+        return (status);
+    }
+
     return (CFE_SUCCESS);
 
 } /* End of RobotSimInit() */
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*  Name:  RobotSimProcessCommandPacket                                    */
@@ -533,71 +353,88 @@ void RobotSimProcessCommandPacket(CFE_SB_Buffer_t *SBBufPtr)
 } /* End RobotSimProcessCommandPacket */
 
 
-void RobotSimProcessCmd(CFE_SB_Buffer_t *SBBufPtr)
+void RobotSimProcessRosApp(CFE_SB_Buffer_t *SBBufPtr)
 {
-    printf("\nRobotSimProcessCmd() -- robot sim is processing a cmd....\n");
-
-    // CFE_MSG_Message_t *MsgPtr = &SBBufPtr->Msg;
+    printf("\nRobotSimProcessRosApp() -- robot sim is processing a buffer....\n");
+    CFE_SB_MsgId_t MsgId = CFE_SB_INVALID_MSG_ID;
+    CFE_MSG_GetMsgId(&SBBufPtr->Msg, &MsgId);
+    printf("RobotSimProcessRosApp() -- we're processing the cmd from MID: 0x%04x\n", CFE_SB_MsgIdToValue(MsgId));
 
     CFE_MSG_Type_t type = CFE_MSG_Type_Invalid;
     CFE_MSG_GetType(&SBBufPtr->Msg, &type);
     if (type == CFE_MSG_Type_Tlm)
-        printf("RobotSimProcessCmd() -- type is TLM\n");
+    {
+        printf("RobotSimProcessRosApp() -- type is TLM\n");
+    }
     else if (type == CFE_MSG_Type_Cmd)
-        printf("RobotSimProcessCmd() -- type is CMD\n");
-    else //CFE_MSG_Type_Invalid
-        printf("RobotSimProcessCmd() -- INVALID\n");
-
-    CFE_SB_MsgId_t MsgId = CFE_SB_INVALID_MSG_ID;
-    CFE_MSG_GetMsgId(&SBBufPtr->Msg, &MsgId);
-
-    // printf("looking for function code? %d\n", SBBufPtr->Msg->Sec.FunctionCode);
-
-    printf("RobotSimProcessCmd() -- we're processing the cmd with msg ID: %d\n", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
-
-    bool has = false;
-    CFE_MSG_GetHasSecondaryHeader(&SBBufPtr->Msg, &has);
-    if (has)
     {
-        printf("RobotSimProcessCmd() -- WE HAVE A 2ND HEADER\n");
+        printf("RobotSimProcessRosApp() -- type is CMD\n");
+
+        bool has = false;
+        CFE_MSG_GetHasSecondaryHeader(&SBBufPtr->Msg, &has);
+        if (has)
+        {
+            printf("RobotSimProcessRosApp() -- there is a 2nd header\n");
+        }
+        else
+        {
+            printf("RobotSimProcessRosApp() -- no 2nd header\n");
+            // if it gets here it doesn't really matter if we add a 2nd header because the value will be 0
+            // CFE_MSG_SetHasSecondaryHeader((CFE_MSG_Message_t *)&CmdMsg, true);
+        }
+
+        CFE_MSG_FcnCode_t CommandCode = 0;
+        int32 ret = CFE_MSG_GetFcnCode(&SBBufPtr->Msg, &CommandCode);
+
+        if (ret == CFE_SUCCESS)
+            printf("RobotSimProcessRosApp() -- we're processing the cmd: %d\n", CommandCode);
+        else if (ret == CFE_MSG_BAD_ARGUMENT)
+            printf("RobotSimProcessRosApp() -- we have a bad msg argument\n");
+        else
+            printf("RobotSimProcessRosApp() -- we have a wrong msg type!!\n");
+
     }
     else
     {
-        printf("RobotSimProcessCmd() -- no 2nd header\n");
-        if (CFE_MSG_SetHasSecondaryHeader(&SBBufPtr->Msg, true) != CFE_SUCCESS)
-            printf("RobotSimProcessCmd() -- FAILED TO SET 2ND HEADER\n");
+        printf("RobotSimProcessRosApp() -- INVALID type\n");
     }
 
-    // printf("getting function code? %d\n", SBBufPtr->Msg->Sec.FunctionCode);
-
-    CFE_MSG_FcnCode_t CommandCode = 0;
-    int32 ret = CFE_MSG_GetFcnCode(&SBBufPtr->Msg, &CommandCode);
-
-    if (ret == CFE_SUCCESS)
-        printf("RobotSimProcessCmd() -- we're processing the cmd: %d\n", CommandCode);
-    else if (ret == CFE_MSG_BAD_ARGUMENT)
-        printf("RobotSimProcessCmd() -- we have a bad msg argument\n");
-    else
-        printf("RobotSimProcessCmd() -- we have a wrong msg type!!\n");
 
     return;
+}
 
-} /* End RobotSimProcessCommandPacket */
+// void RobotSimProcessRosApp(CFE_MSG_Message_t *MsgPtr)
+// {
+//     printf("\nRobotSimProcessRosApp() -- robot sim is processing a msg....\n");
+
+//     CFE_SB_MsgId_t    MsgId   = 0;
+//     CFE_MSG_FcnCode_t FcnCode = 0;
+
+//     if (CFE_MSG_GetMsgId(MsgPtr, &MsgId) != CFE_SUCCESS)
+//     {
+//         return;
+//     }
+
+//     printf("RobotSimProcessRosApp() -- we're processing the cmd from MID: 0x%04x\n", CFE_SB_MsgIdToValue(MsgId));
+
+//     int32 ret = CFE_MSG_GetFcnCode((CFE_MSG_CommandHeader_t *)MsgPtr, &FcnCode);
+//     if (ret != CFE_SUCCESS)
+//     {
+//         if (ret == CFE_MSG_BAD_ARGUMENT)
+//             printf("RobotSimProcessRosApp() -- bad msg argument\n");
+//         else
+//             printf("RobotSimProcessRosApp() -- wrong msg type!!\n");
+//     }
+//     else
+//     {
+//         printf("RobotSimProcessRosApp() -- we're processing the cmd: %d\n", FcnCode);
+//     }
 
 
-void RobotSimProcessSBN(CFE_SB_Buffer_t *SBBufPtr)
-{
-    printf("\nrobot sim is processing telem....\n");
+//     return;
 
-    CFE_SB_MsgId_t MsgId = CFE_SB_INVALID_MSG_ID;
+// } /* End RobotSimProcessCommandPacket */
 
-    CFE_MSG_GetMsgId(&SBBufPtr->Msg, &MsgId);
-
-    printf("we're processing the telem with msg ID: %d\n", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
-
-    return;
-
-} /* End RobotSimProcessCommandPacket */
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
@@ -610,7 +447,7 @@ void RobotSimProcessGroundCommand(CFE_SB_Buffer_t *SBBufPtr)
     CFE_MSG_FcnCode_t CommandCode = 0;
 
     CFE_MSG_GetFcnCode(&SBBufPtr->Msg, &CommandCode);
-    printf("we're getting a ground command?\n");
+    printf("RobotSimProcessGroundCommand() -- we're getting a ground command...\n");
     /*
     ** Process "known" ros app ground commands
     */
@@ -671,8 +508,10 @@ void RobotSimProcessGroundCommand(CFE_SB_Buffer_t *SBBufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
 int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg)
 {
-  int i;
-    printf("housekeeping...\n");
+    int i;
+    
+    printf("RobotSimReportHousekeeping() -- sending joint states as part of housekeeping...\n");
+    
     /*
     ** Get command execution counters...
     */
@@ -682,6 +521,16 @@ int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg)
     /*
     ** Send housekeeping telemetry packet...
     */
+    // RobotSimData.HkTlm.Payload.str[0] = 'H';
+    // RobotSimData.HkTlm.Payload.str[1] = 'i';
+    // RobotSimData.HkTlm.Payload.str[2] = '!';
+    // for (uint8 i = 0; i < ROBOT_SIM_DOF; ++i)
+    // {
+    //     // RobotSimData.HkTlm.Payload.joint_state[i].position = (float)rand()/(float)(RAND_MAX/1.57);
+    //     RobotSimData.HkTlm.Payload.joint_state[i].position = ((uint8)rand()/(uint8)(RAND_MAX/9)) + '0';
+    //     printf("RobotSimInit() -- randomized joint state[%d]", i);//: %c\n", i, RobotSimData.HkTlm.Payload.joint_state[i].position);
+    // }
+    
     CFE_SB_TimeStampMsg(&RobotSimData.HkTlm.TlmHeader.Msg);
     CFE_SB_TransmitMsg(&RobotSimData.HkTlm.TlmHeader.Msg, true);
 
@@ -724,8 +573,8 @@ void RobotSimHelloCmd(const RobotSimNoopCmd_t *Msg)
 {
     RobotSimData.CmdCounter++;
 
-    // CFE_EVS_SendEvent(ROBOT_SIM_HELLO_WORLD_INF_EID, CFE_EVS_EventType_INFORMATION, "robot sim: Hello, ros! %s",
-    //                   ROBOT_SIM_VERSION);
+    CFE_EVS_SendEvent(ROBOT_SIM_HELLO_WORLD_INF_EID, CFE_EVS_EventType_INFORMATION, "robot sim: Hello, ros! %s",
+                      ROBOT_SIM_VERSION);
 
 } /* End of RobotHelloCmd */
 
@@ -761,6 +610,8 @@ bool RobotSimVerifyCmdLength(CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength)
     size_t            ActualLength = 0;
     CFE_SB_MsgId_t    MsgId        = CFE_SB_INVALID_MSG_ID;
     CFE_MSG_FcnCode_t FcnCode      = 0;
+
+    printf("RobotSimVerifyCmdLength() --\n");
 
     CFE_MSG_GetSize(MsgPtr, &ActualLength);
 
@@ -798,6 +649,8 @@ void RobotSimGetCrc(const char *TableName)
     uint32         Crc;
     CFE_TBL_Info_t TblInfoPtr;
 
+    printf("RobotSimGetCrc() -- \n");
+
     status = CFE_TBL_GetInfo(&TblInfoPtr, TableName);
     if (status != CFE_SUCCESS)
     {
@@ -824,6 +677,8 @@ int32 RobotSimTblValidationFunc(void *TblData)
 {
     int32               ReturnCode = CFE_SUCCESS;
     RobotSimTable_t *TblDataPtr = (RobotSimTable_t *)TblData;
+
+    printf("RobotSimTblValidationFunc() -- validating a table\n");
 
     /*
     ** Ros Table Validation
@@ -852,6 +707,8 @@ int32 RobotSimProcess(const RobotSimProcessCmd_t *Msg)
     const char *        TableName = "RobotSim.RobotSimTable";
 
     /* Ros Use of Table */
+
+    printf("RobotSimProcess() --\n");
 
     status = CFE_TBL_GetAddress((void *)&TblPtr, RobotSimData.TblHandles[0]);
 

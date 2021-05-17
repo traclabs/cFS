@@ -42,6 +42,8 @@
 #include "robot_sim_msgids.h"
 #include "robot_sim_msg.h"
 
+#include "ros_app_msgids.h"
+
 /***********************************************************************/
 #define ROBOT_SIM_PIPE_DEPTH 32 /* Depth of the Command Pipe for Application */
 
@@ -53,8 +55,6 @@
 #define ROBOT_SIM_TABLE_OUT_OF_RANGE_ERR_CODE -1
 
 #define ROBOT_SIM_TBL_ELEMENT_1_MAX 10
-
-#define ROBOT_SIM_CMDID_1_LIMIT (10)
 /************************************************************************
 ** Type Definitions
 *************************************************************************/
@@ -62,17 +62,6 @@
 /*
 ** Global Data
 */
-
-/// this seems to be duplicated from robot_sim_msg.h
-typedef struct
-{
-  CFE_MSG_TelemetryHeader_t TlmHeader;
-
-  uint8 CmdCounter;
-  uint8 ErrCounter;
-
-} RobotSimHkPacket_t;
-
 
 typedef struct
 {
@@ -86,10 +75,7 @@ typedef struct
     ** Housekeeping telemetry packet...
     */
     RobotSimHkTlm_t HkTlm;
-
-    RobotSimHkPacket_t RosHk;
-
-    RobotSimCmd_t SbnCmd;
+    RobotSimCmd_t RobotCmd;
 
     /*
     ** Run Status variable used in the main processing loop
@@ -100,16 +86,12 @@ typedef struct
     ** Operational data (not reported in housekeeping)...
     */
     CFE_SB_PipeId_t CommandPipe;
-
-    CFE_SB_PipeId_t RobotSimPipe_1;
-    char   RosName[CFE_MISSION_MAX_API_LEN];
-
-    CFE_SB_PipeId_t RosSbnPipe;
-    char RosCmdName[CFE_MISSION_MAX_API_LEN];
+    CFE_SB_PipeId_t RosPipe;
 
     /*
     ** Initialization data (not reported in housekeeping)...
     */
+    char   RosPipeName[CFE_MISSION_MAX_API_LEN];
     char   PipeName[CFE_MISSION_MAX_API_LEN];
     uint16 PipeDepth;
 
@@ -127,10 +109,10 @@ typedef struct
 */
 void  RobotSimMain(void);
 int32 RobotSimInit(void);
-void  RobotSimProcessSBN(CFE_SB_Buffer_t *SBBufPtr);
-void  RobotSimProcessCmd(CFE_SB_Buffer_t *SBBufPtr);
 void  RobotSimProcessCommandPacket(CFE_SB_Buffer_t *SBBufPtr);
 void  RobotSimProcessGroundCommand(CFE_SB_Buffer_t *SBBufPtr);
+void  RobotSimProcessRosApp(CFE_SB_Buffer_t *SBBufPtr);
+// void  RobotSimProcessRosApp(CFE_MSG_Message_t *MsgPtr);
 int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg);
 int32 RobotSimResetCounters(const RobotSimResetCountersCmd_t *Msg);
 int32 RobotSimProcess(const RobotSimProcessCmd_t *Msg);

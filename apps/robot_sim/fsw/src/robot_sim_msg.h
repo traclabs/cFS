@@ -67,11 +67,22 @@ typedef RobotSimNoArgsCmd_t RobotSimCmd_t;
 ** Type definition (Robot Sim housekeeping)
 */
 
+#define ROBOT_SIM_DOF 3
+
+typedef struct
+{
+	// uint8 index;
+	// float position;
+	char index;
+	char position;
+} RobotSimJoint_t;
+
 typedef struct
 {
     uint8 CommandErrorCounter;
     uint8 CommandCounter;
-    uint8 spare[2];
+    char str[3];
+    RobotSimJoint_t joint_state[ROBOT_SIM_DOF];
 } RobotSimHkTlmPayload_t;
 
 typedef struct
