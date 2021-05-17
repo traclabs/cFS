@@ -25,7 +25,7 @@
 [submodule "apps/sch_lab"]
 	path = apps/sch_lab
 	url = https://github.com/traclabs/sch_lab.git
-    branch = main
+    branch = feature/robot-sim-app
 [submodule "apps/to_lab"]
 	path = apps/to_lab
 	url = https://github.com/traclabs/to_lab.git
