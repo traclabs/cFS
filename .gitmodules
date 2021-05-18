@@ -29,7 +29,7 @@
 [submodule "apps/to_lab"]
 	path = apps/to_lab
 	url = https://github.com/traclabs/to_lab.git
-    branch = main
+    branch = feature/robot-sim-app
 [submodule "tools/cFS-GroundSystem"]
 	path = tools/cFS-GroundSystem
 	url = https://github.com/traclabs/cFS-GroundSystem.git
