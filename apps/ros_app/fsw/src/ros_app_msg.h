@@ -71,6 +71,7 @@ typedef struct
     uint8 CommandErrorCounter;
     uint8 CommandCounter;
     uint8 spare[2];
+    char text[5];
 } ROS_APP_HkTlm_Payload_t;
 
 typedef struct

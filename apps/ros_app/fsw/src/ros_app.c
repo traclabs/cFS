@@ -88,17 +88,17 @@ void ROS_APP_Main(void)
         */
         CFE_ES_PerfLogEntry(ROS_APP_PERF_ID);
 
-        // ROS_APP_Data.HkTlm.Payload.text[0] = 'h';
-        // ROS_APP_Data.HkTlm.Payload.text[1] = 'e';
-        // ROS_APP_Data.HkTlm.Payload.text[2] = 'l';
-        // ROS_APP_Data.HkTlm.Payload.text[3] = 'l';
-        // ROS_APP_Data.HkTlm.Payload.text[4] = 'o';
-        // printf("ROS_APP_ReportHousekeeping() -- sending text: \'%s\'\n", ROS_APP_Data.HkTlm.Payload.text);
-        // /*
-        // ** Send housekeeping telemetry packet...
-        // */
-        // CFE_SB_TimeStampMsg(&ROS_APP_Data.HkTlm.TlmHeader.Msg);
-        // CFE_SB_TransmitMsg(&ROS_APP_Data.HkTlm.TlmHeader.Msg, true);
+        ROS_APP_Data.HkTlm.Payload.text[0] = 'h';
+        ROS_APP_Data.HkTlm.Payload.text[1] = 'e';
+        ROS_APP_Data.HkTlm.Payload.text[2] = 'l';
+        ROS_APP_Data.HkTlm.Payload.text[3] = 'l';
+        ROS_APP_Data.HkTlm.Payload.text[4] = 'o';
+        printf("ROS_APP_ReportHousekeeping() -- sending text: \'%s\'\n", ROS_APP_Data.HkTlm.Payload.text);
+        /*
+        ** Send housekeeping telemetry packet...
+        */
+        CFE_SB_TimeStampMsg(&ROS_APP_Data.HkTlm.TlmHeader.Msg);
+        CFE_SB_TransmitMsg(&ROS_APP_Data.HkTlm.TlmHeader.Msg, true);
 
         if (status == CFE_SUCCESS)
         {
