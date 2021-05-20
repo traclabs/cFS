@@ -35,6 +35,8 @@
 
 #include <string.h>
 
+#include <math.h>
+
 /*
 ** global data
 */
@@ -143,6 +145,8 @@ int32 RobotSimInit(void)
     */
     RobotSimData.CmdCounter = 0;
     RobotSimData.ErrCounter = 0;
+
+    RobotSimData.angle = 0.0;
 
     /*
     ** Initialize app configuration data
@@ -390,13 +394,14 @@ int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg)
     // RobotSimData.HkTlm.Payload.state.joint4 = (float)rand()/(float)(RAND_MAX/1.57);
     // RobotSimData.HkTlm.Payload.state.joint5 = (float)rand()/(float)(RAND_MAX/1.57);
     // RobotSimData.HkTlm.Payload.state.joint6 = (float)rand()/(float)(RAND_MAX/1.57);
-    RobotSimData.HkTlm.Payload.state.joint0 = 0.0;
-    RobotSimData.HkTlm.Payload.state.joint1 = 0.1;
-    RobotSimData.HkTlm.Payload.state.joint2 = 0.2;
-    RobotSimData.HkTlm.Payload.state.joint3 = 0.3;
-    RobotSimData.HkTlm.Payload.state.joint4 = 0.4;
-    RobotSimData.HkTlm.Payload.state.joint5 = 0.5;
-    RobotSimData.HkTlm.Payload.state.joint6 = 0.6;
+    RobotSimData.HkTlm.Payload.state.joint0 = sin(RobotSimData.angle);
+    RobotSimData.HkTlm.Payload.state.joint1 = sin(RobotSimData.angle);
+    RobotSimData.HkTlm.Payload.state.joint2 = sin(RobotSimData.angle);
+    RobotSimData.HkTlm.Payload.state.joint3 = sin(RobotSimData.angle);
+    RobotSimData.HkTlm.Payload.state.joint4 = sin(RobotSimData.angle);
+    RobotSimData.HkTlm.Payload.state.joint5 = sin(RobotSimData.angle);
+    RobotSimData.HkTlm.Payload.state.joint6 = sin(RobotSimData.angle);
+    RobotSimData.angle += 0.043; // 5 deg per publish
     CFE_SB_TimeStampMsg(&RobotSimData.HkTlm.TlmHeader.Msg);
     CFE_SB_TransmitMsg(&RobotSimData.HkTlm.TlmHeader.Msg, true);
 

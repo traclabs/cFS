@@ -77,6 +77,8 @@ typedef struct
     RobotSimHkTlm_t HkTlm;
     // RobotSimCmd_t RobotCmd;
 
+    double angle;
+
     /*
     ** Run Status variable used in the main processing loop
     */
