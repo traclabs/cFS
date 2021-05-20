@@ -86,7 +86,7 @@ SET(SPACECRAFT_ID 0x42)
 # This list is effectively appended to every TGTx_APPLIST in targets.cmake.  
 # Example:
 #list(APPEND MISSION_GLOBAL_APPLIST sample_app sample_lib)
-list(APPEND MISSION_GLOBAL_APPLIST sbn sbn_udp sbn_f_remap) # ros_app robot_sim)
+#list(APPEND MISSION_GLOBAL_APPLIST sbn sbn_udp sbn_f_remap) # ros_app robot_sim)
 
 # The "MISSION_GLOBAL_STATIC_APPLIST" is similar to MISSION_GLOBAL_APPLIST
 # but the apps are statically linked.  
@@ -102,12 +102,12 @@ SET(FT_INSTALL_SUBDIR "host/functional-test")
 SET(MISSION_CPUNAMES cpu1 cpu2)
 
 SET(cpu1_PROCESSORID 1)
-SET(cpu1_APPLIST ci_lab to_lab sch_lab ros_app)
+SET(cpu1_APPLIST ci_lab to_lab sch_lab robot_sim)
 SET(cpu1_FILELIST cfe_es_startup.scr)
 
 # CPU2 example.  This is not built by default anymore but 
 # serves as an example of how one would configure multiple cpus.
 SET(cpu2_PROCESSORID 2)
-SET(cpu2_APPLIST ci_lab to_lab sch_lab robot_sim)
+SET(cpu2_APPLIST ci_lab to_lab sch_lab)
 SET(cpu2_FILELIST cfe_es_startup.scr)
 

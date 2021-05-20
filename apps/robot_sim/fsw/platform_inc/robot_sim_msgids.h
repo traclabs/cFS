@@ -30,10 +30,12 @@
 #ifndef _robot_sim_msgids_h_
 #define _robot_sim_msgids_h_
 
-#define ROBOT_SIM_MSG_CMD_MID 0x1116
-#define ROBOT_SIM_CMD_MID     0x1717
-#define ROBOT_SIM_SEND_HK_MID 0x1715
-#define ROBOT_SIM_HK_TLM_MID  0x0715
+#include "cfe_msgids.h"
+
+#define ROBOT_SIM_CMD_MID     (CFE_PLATFORM_CMD_MID_BASE + 0x17)
+#define ROBOT_SIM_SEND_HK_MID (CFE_PLATFORM_CMD_MID_BASE + 0x18)
+
+#define ROBOT_SIM_HK_TLM_MID  (CFE_PLATFORM_TLM_MID_BASE + 0x16)
 
 #endif /* _robot_sim_msgids_h_ */
 

@@ -33,12 +33,9 @@
 /*
 ** Robot Sim command codes
 */
-// TODO @seth g switched the noop cmd ID with the hello world cmd ID to get the print to change
-// still not sure how to get these cmd IDs into the cmds themselves
-#define ROBOT_SIM_NOOP_CC           3
+#define ROBOT_SIM_NOOP_CC           0
 #define ROBOT_SIM_RESET_COUNTERS_CC 1
-#define ROBOT_SIM_PROCESS_CC		  2
-#define ROBOT_SIM_HELLO_WORLD_CC	  0
+// #define ROBOT_SIM_PROCESS_CC        2
 
 /*************************************************************************/
 
@@ -67,22 +64,34 @@ typedef RobotSimNoArgsCmd_t RobotSimCmd_t;
 ** Type definition (Robot Sim housekeeping)
 */
 
-#define ROBOT_SIM_DOF 3
+#define ROBOT_SIM_DOF 7
 
 typedef struct
 {
-	// uint8 index;
-	// float position;
-	char index;
-	char position;
+    uint8 index;
+    float position;
+    // char index;
+    // char position;
 } RobotSimJoint_t;
+
+typedef struct
+{
+    float joint0;
+    float joint1;
+    float joint2;
+    float joint3;
+    float joint4;
+    float joint5;
+    float joint6;
+} RobotSimSSRMS_t;
 
 typedef struct
 {
     uint8 CommandErrorCounter;
     uint8 CommandCounter;
-    char str[3];
-    RobotSimJoint_t joint_state[ROBOT_SIM_DOF];
+    RobotSimSSRMS_t state;
+    // char str[3];
+    // RobotSimJoint_t joint_state[ROBOT_SIM_DOF];
 } RobotSimHkTlmPayload_t;
 
 typedef struct

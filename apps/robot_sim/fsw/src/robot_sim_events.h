@@ -37,9 +37,8 @@
 #define ROBOT_SIM_INVALID_MSGID_ERR_EID 5
 #define ROBOT_SIM_LEN_ERR_EID           6
 #define ROBOT_SIM_PIPE_ERR_EID          7
-#define ROBOT_SIM_HELLO_WORLD_INF_EID   8
 
-#define ROBOT_SIM_EVENT_COUNTS 8
+#define ROBOT_SIM_EVENT_COUNTS 7
 
 #endif /* _robot_sim_events_h_ */
 

@@ -42,19 +42,19 @@
 #include "robot_sim_msgids.h"
 #include "robot_sim_msg.h"
 
-#include "ros_app_msgids.h"
+// #include "ros_app_msgids.h"
 
 /***********************************************************************/
 #define ROBOT_SIM_PIPE_DEPTH 32 /* Depth of the Command Pipe for Application */
 
-#define ROBOT_SIM_NUMBER_OF_TABLES 1 /* Number of Table(s) */
+// #define ROBOT_SIM_NUMBER_OF_TABLES 1 /* Number of Table(s) */
 
 /* Define filenames of default data images for tables */
-#define ROBOT_SIM_TABLE_FILE "/cf/robot_sim_tbl.tbl"
+// #define ROBOT_SIM_TABLE_FILE "/cf/robot_sim_tbl.tbl"
 
-#define ROBOT_SIM_TABLE_OUT_OF_RANGE_ERR_CODE -1
+// #define ROBOT_SIM_TABLE_OUT_OF_RANGE_ERR_CODE -1
 
-#define ROBOT_SIM_TBL_ELEMENT_1_MAX 10
+// #define ROBOT_SIM_TBL_ELEMENT_1_MAX 10
 /************************************************************************
 ** Type Definitions
 *************************************************************************/
@@ -75,7 +75,7 @@ typedef struct
     ** Housekeeping telemetry packet...
     */
     RobotSimHkTlm_t HkTlm;
-    RobotSimCmd_t RobotCmd;
+    // RobotSimCmd_t RobotCmd;
 
     /*
     ** Run Status variable used in the main processing loop
@@ -86,17 +86,15 @@ typedef struct
     ** Operational data (not reported in housekeeping)...
     */
     CFE_SB_PipeId_t CommandPipe;
-    // CFE_SB_PipeId_t RosPipe;
 
     /*
     ** Initialization data (not reported in housekeeping)...
     */
-    // char   RosPipeName[CFE_MISSION_MAX_API_LEN];
     char   PipeName[CFE_MISSION_MAX_API_LEN];
     uint16 PipeDepth;
 
     CFE_EVS_BinFilter_t EventFilters[ROBOT_SIM_EVENT_COUNTS];
-    CFE_TBL_Handle_t    TblHandles[ROBOT_SIM_NUMBER_OF_TABLES];
+    // CFE_TBL_Handle_t    TblHandles[ROBOT_SIM_NUMBER_OF_TABLES];
 
 } RobotSimData_t;
 
@@ -108,19 +106,22 @@ typedef struct
 **       functions are not called from any other source module.
 */
 void  RobotSimMain(void);
+
 int32 RobotSimInit(void);
+
 void  RobotSimProcessCommandPacket(CFE_SB_Buffer_t *SBBufPtr);
 void  RobotSimProcessGroundCommand(CFE_SB_Buffer_t *SBBufPtr);
-void  RobotSimProcessRosApp(CFE_SB_Buffer_t *SBBufPtr);
-// void  RobotSimProcessRosApp(CFE_MSG_Message_t *MsgPtr);
-int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg);
-int32 RobotSimResetCounters(const RobotSimResetCountersCmd_t *Msg);
-int32 RobotSimProcess(const RobotSimProcessCmd_t *Msg);
-int32 RobotSimNoop(const RobotSimNoopCmd_t *Msg);
-void  RobotSimHelloCmd(const RobotSimNoopCmd_t *Msg);
-void  RobotSimGetCrc(const char *TableName);
 
-int32 RobotSimTblValidationFunc(void *TblData);
+int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg);
+
+int32 RobotSimResetCounters(const RobotSimResetCountersCmd_t *Msg);
+int32 RobotSimNoop(const RobotSimNoopCmd_t *Msg);
+
+// int32 RobotSimProcess(const RobotSimProcessCmd_t *Msg);
+// void  RobotSimGetCrc(const char *TableName);
+// void RobotSimProcessRosApp(CFE_SB_Buffer_t *SBBufPtr);
+
+// int32 RobotSimTblValidationFunc(void *TblData);
 
 bool RobotSimVerifyCmdLength(CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength);
 
