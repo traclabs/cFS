@@ -86,12 +86,12 @@ typedef struct
     ** Operational data (not reported in housekeeping)...
     */
     CFE_SB_PipeId_t CommandPipe;
-    CFE_SB_PipeId_t RosPipe;
+    // CFE_SB_PipeId_t RosPipe;
 
     /*
     ** Initialization data (not reported in housekeeping)...
     */
-    char   RosPipeName[CFE_MISSION_MAX_API_LEN];
+    // char   RosPipeName[CFE_MISSION_MAX_API_LEN];
     char   PipeName[CFE_MISSION_MAX_API_LEN];
     uint16 PipeDepth;
 

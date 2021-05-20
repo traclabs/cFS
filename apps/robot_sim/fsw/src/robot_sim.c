@@ -54,7 +54,7 @@ void RobotSimMain(void)
     /*
     ** Register the app with Executive services
     */
-    CFE_ES_RegisterApp();
+    // CFE_ES_RegisterApp();
 
     /*
     ** Create the first Performance Log entry
@@ -127,7 +127,7 @@ void RobotSimMain(void)
 
         // wait for a new message from the ROS APP        
         printf("\n");
-        status = CFE_SB_ReceiveBuffer(&RosAppBufPtr, RobotSimData.RosPipe, CFE_SB_PEND_FOREVER); //CFE_SB_POLL CFE_SB_PEND_FOREVER
+        status = CFE_SB_ReceiveBuffer(&RosAppBufPtr, RobotSimData.CommandPipe, CFE_SB_PEND_FOREVER); //CFE_SB_POLL CFE_SB_PEND_FOREVER
         // status = CFE_SB_ReceiveBuffer((CFE_SB_Buffer_t **)&MsgPtr, RobotSimData.RosPipe, CFE_SB_PEND_FOREVER); //CFE_SB_POLL CFE_SB_PEND_FOREVER
         if (status == CFE_SUCCESS)
         {
@@ -290,23 +290,23 @@ int32 RobotSimInit(void)
     /*
     ** create a pipe to get msg in from other cpu
     */
-    strncpy(RobotSimData.RosPipeName, "ROBOT_SIM_ROS_PIPE", sizeof(RobotSimData.RosPipeName));
-    RobotSimData.RosPipeName[sizeof(RobotSimData.RosPipeName) - 1] = 0;
+    // strncpy(RobotSimData.RosPipeName, "ROBOT_SIM_ROS_PIPE", sizeof(RobotSimData.RosPipeName));
+    // RobotSimData.RosPipeName[sizeof(RobotSimData.RosPipeName) - 1] = 0;
 
     /*
     ** Create ROS message pipe.
     */
-    status = CFE_SB_CreatePipe(&RobotSimData.RosPipe, RobotSimData.PipeDepth, RobotSimData.RosPipeName);
-    if (status != CFE_SUCCESS)
-    {
-        CFE_ES_WriteToSysLog("Robot Sim: Error creating ROS pipe, RC = 0x%08lX\n", (unsigned long)status);
-        return (status);
-    }
+    // status = CFE_SB_CreatePipe(&RobotSimData.RosPipe, RobotSimData.PipeDepth, RobotSimData.RosPipeName);
+    // if (status != CFE_SUCCESS)
+    // {
+    //     CFE_ES_WriteToSysLog("Robot Sim: Error creating ROS pipe, RC = 0x%08lX\n", (unsigned long)status);
+    //     return (status);
+    // }
 
     /*
     ** Subscribe to ros app commands
     */
-    status = CFE_SB_Subscribe(ROS_APP_MSG_CMD_MID, RobotSimData.RosPipe);
+    status = CFE_SB_Subscribe(ROS_APP_MSG_CMD_MID, RobotSimData.CommandPipe);
     if (status != CFE_SUCCESS)
     {
         CFE_ES_WriteToSysLog("Robot Sim: Error Subscribing to ROS APP messages, RC = 0x%08lX\n", (unsigned long)status);
