@@ -76,13 +76,13 @@ typedef struct
 
 typedef struct
 {
-    double joint0;
-    double joint1;
-    double joint2;
-    double joint3;
-    double joint4;
-    double joint5;
-    double joint6;
+    int joint0;
+    int joint1;
+    int joint2;
+    int joint3;
+    int joint4;
+    int joint5;
+    int joint6;
 } RobotSimSSRMS_t;
 
 typedef struct
