@@ -306,7 +306,7 @@ int32 RobotSimInit(void)
     /*
     ** Subscribe to ros app commands
     */
-    status = CFE_SB_Subscribe(ROS_APP_MSG_CMD_MID, RobotSimData.CommandPipe);
+    status = CFE_SB_Subscribe(0x1896, RobotSimData.CommandPipe);
     if (status != CFE_SUCCESS)
     {
         CFE_ES_WriteToSysLog("Robot Sim: Error Subscribing to ROS APP messages, RC = 0x%08lX\n", (unsigned long)status);
