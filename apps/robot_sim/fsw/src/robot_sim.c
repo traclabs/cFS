@@ -367,8 +367,8 @@ int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg)
     /*
     ** Get command execution counters...
     */
-    // RobotSimData.HkTlm.Payload.CommandErrorCounter = RobotSimData.ErrCounter;
-    // RobotSimData.HkTlm.Payload.CommandCounter      = RobotSimData.CmdCounter;
+    RobotSimData.HkTlm.Payload.CommandErrorCounter = RobotSimData.ErrCounter;
+    RobotSimData.HkTlm.Payload.CommandCounter      = RobotSimData.CmdCounter;
 
     /*
     ** Send housekeeping telemetry packet...
