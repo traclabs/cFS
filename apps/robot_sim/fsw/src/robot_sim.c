@@ -79,34 +79,8 @@ void RobotSimMain(void)
         CFE_ES_PerfLogExit(ROBOT_SIM_PERF_ID);
 
         /* Pend on receipt of command packet */
-        status = CFE_SB_ReceiveBuffer(&SBBufPtr, RobotSimData.CommandPipe, CFE_SB_PEND_FOREVER); //CFE_SB_POLL CFE_SB_PEND_FOREVER
+        status = CFE_SB_ReceiveBuffer(&SBBufPtr, RobotSimData.CommandPipe, CFE_SB_PEND_FOREVER);
 
-
-        /*
-        ** Send payload...
-        */
-        // starting to send the changning joint states
-        // using random values 0-9 for now because that's easy to asciify for wireshark
-        // RobotSimData.HkTlm.Payload.str[0] = 'H';
-        // RobotSimData.HkTlm.Payload.str[1] = 'i';
-        // RobotSimData.HkTlm.Payload.str[2] = '!';
-        // for (uint8 i = 0; i < ROBOT_SIM_DOF; ++i)
-        // {
-        //     // RobotSimData.HkTlm.Payload.joint_state[i].position = (float)rand()/(float)(RAND_MAX/1.57);
-        //     // printf("RobotSimInit() -- randomized joint state[%d]: %g\n", i, RobotSimData.HkTlm.Payload.joint_state[i].position);
-        //     RobotSimData.HkTlm.Payload.joint_state[i].position = rand()%9 + '0';
-        //     printf("RobotSimInit() -- randomized joint state[%d] to %c\n", i, RobotSimData.HkTlm.Payload.joint_state[i].position);
-        // }
-
-        // CFE_SB_TimeStampMsg(&RobotSimData.HkTlm.TlmHeader.Msg);
-        // CFE_SB_TransmitMsg(&RobotSimData.HkTlm.TlmHeader.Msg, true);
-
-        /*
-        ** Performance Log Entry Stamp
-        */
-        // CFE_ES_PerfLogEntry(ROBOT_SIM_PERF_ID);
-
-        // commented out for now, should add this back in later as it handles commands and telemetry
         if (status == CFE_SUCCESS)
         {
             RobotSimProcessCommandPacket(SBBufPtr);
@@ -118,6 +92,11 @@ void RobotSimMain(void)
 
             RobotSimData.RunStatus = CFE_ES_RunStatus_APP_ERROR;
         }
+
+        /*
+        ** Performance Log Entry Stamp
+        */
+        CFE_ES_PerfLogEntry(ROBOT_SIM_PERF_ID);
     }
 
     /*
@@ -128,6 +107,7 @@ void RobotSimMain(void)
     CFE_ES_ExitApp(RobotSimData.RunStatus);
 
 } /* End of RobotSimMain() */
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  */
 /*                                                                            */
@@ -186,18 +166,6 @@ int32 RobotSimInit(void)
     */
     CFE_MSG_Init(&RobotSimData.HkTlm.TlmHeader.Msg, ROBOT_SIM_HK_TLM_MID, sizeof(RobotSimData.HkTlm));
 
-    // init the joint states
-    // for (uint8 i = 0; i < ROBOT_SIM_DOF; ++i)
-    // {
-    //     RobotSimJoint_t jnt;
-    //     jnt.index = i;
-    //     jnt.position = 0.0;
-    //     // jnt.index = i + '0';
-    //     // jnt.position = '0';
-    //     RobotSimData.HkTlm.Payload.joint_state[i] = jnt;
-    //     // printf("RobotSimInit() -- creating joint: %d out of %d with position: %g\n", i+1, ROBOT_SIM_DOF, jnt.position);
-    // }
-
     /*
     ** Create Software Bus message pipe.
     */
@@ -229,34 +197,8 @@ int32 RobotSimInit(void)
         return (status);
     }
 
-    /*
-    ** Register Table(s)
-    */
-    // status = CFE_TBL_Register(&RobotSimData.TblHandles[0], "RobotSimTable", sizeof(RobotSimTable_t),
-    //                           CFE_TBL_OPT_DEFAULT, RobotSimTblValidationFunc);
-    // if (status != CFE_SUCCESS)
-    // {
-    //     CFE_ES_WriteToSysLog("Robot Sim: Error Registering Table, RC = 0x%08lX\n", (unsigned long)status);
-
-    //     return (status);
-    // }
-    // else
-    // {
-    //     status = CFE_TBL_Load(RobotSimData.TblHandles[0], CFE_TBL_SRC_FILE, ROBOT_SIM_TABLE_FILE);
-    // }
-
     CFE_EVS_SendEvent(ROBOT_SIM_STARTUP_INF_EID, CFE_EVS_EventType_INFORMATION, "Robot Sim Initialized.%s",
                       ROBOT_SIM_VERSION_STRING);
-
-    /*
-    ** Subscribe to ros app commands
-    */
-    // status = CFE_SB_Subscribe(0x1896, RobotSimData.CommandPipe);
-    // if (status != CFE_SUCCESS)
-    // {
-    //     CFE_ES_WriteToSysLog("Robot Sim: Error Subscribing to ROS APP messages, RC = 0x%08lX\n", (unsigned long)status);
-    //     return (status);
-    // }
 
     return (CFE_SUCCESS);
 
@@ -332,14 +274,6 @@ void RobotSimProcessGroundCommand(CFE_SB_Buffer_t *SBBufPtr)
 
             break;
 
-        // case ROBOT_SIM_PROCESS_CC:
-        //     if (RobotSimVerifyCmdLength(&SBBufPtr->Msg, sizeof(RobotSimProcessCmd_t)))
-        //     {
-        //         RobotSimProcess((RobotSimProcessCmd_t *)SBBufPtr);
-        //     }
-
-        //     break;
-
         /* default case already found during FC vs length test */
         default:
             CFE_EVS_SendEvent(ROBOT_SIM_COMMAND_ERR_EID, CFE_EVS_EventType_ERROR,
@@ -364,8 +298,6 @@ void RobotSimProcessGroundCommand(CFE_SB_Buffer_t *SBBufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
 int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg)
 {
-    // int i;
-    
     printf("RobotSimReportHousekeeping() -- sending joint states as part of housekeeping...\n");
     
     /*
@@ -378,22 +310,6 @@ int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg)
     /*
     ** Send housekeeping telemetry packet...
     */
-    // for (uint8 i = 0; i < ROBOT_SIM_DOF; ++i)
-    // {
-    //     RobotSimData.HkTlm.Payload.joint_state[i].position = (float)rand()/(float)(RAND_MAX/1.57);
-    //     // RobotSimData.HkTlm.Payload.joint_state[i].position = ((uint8)rand()/(uint8)(RAND_MAX/9)) + '0';
-    //     printf("RobotSimReportHousekeeping() -- randomized joint state[%d]=%f\n", i, RobotSimData.HkTlm.Payload.joint_state[i].position);//: %c\n", i, RobotSimData.HkTlm.Payload.joint_state[i].position);
-    // }
-    // CFE_SB_TimeStampMsg(&RobotSimData.HkTlm.TlmHeader.Msg);
-    // CFE_SB_TransmitMsg(&RobotSimData.HkTlm.TlmHeader.Msg, true);
-    
-    // RobotSimData.HkTlm.Payload.state.joint0 = (float)rand()/(float)(RAND_MAX/1.57);
-    // RobotSimData.HkTlm.Payload.state.joint1 = (float)rand()/(float)(RAND_MAX/1.57);
-    // RobotSimData.HkTlm.Payload.state.joint2 = (float)rand()/(float)(RAND_MAX/1.57);
-    // RobotSimData.HkTlm.Payload.state.joint3 = (float)rand()/(float)(RAND_MAX/1.57);
-    // RobotSimData.HkTlm.Payload.state.joint4 = (float)rand()/(float)(RAND_MAX/1.57);
-    // RobotSimData.HkTlm.Payload.state.joint5 = (float)rand()/(float)(RAND_MAX/1.57);
-    // RobotSimData.HkTlm.Payload.state.joint6 = (float)rand()/(float)(RAND_MAX/1.57);
     RobotSimData.HkTlm.Payload.state.joint0 = sin(RobotSimData.angle);
     RobotSimData.HkTlm.Payload.state.joint1 = sin(RobotSimData.angle);
     RobotSimData.HkTlm.Payload.state.joint2 = sin(RobotSimData.angle);
@@ -405,17 +321,10 @@ int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg)
     CFE_SB_TimeStampMsg(&RobotSimData.HkTlm.TlmHeader.Msg);
     CFE_SB_TransmitMsg(&RobotSimData.HkTlm.TlmHeader.Msg, true);
 
-    /*
-    ** Manage any pending table loads, validations, etc.
-    */
-    // for (i = 0; i < ROBOT_SIM_NUMBER_OF_TABLES; i++)
-    // {
-    //     CFE_TBL_Manage(RobotSimData.TblHandles[i]);
-    // }
-
     return CFE_SUCCESS;
 
 } /* End of RobotSimReportHousekeeping() */
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
@@ -493,99 +402,3 @@ bool RobotSimVerifyCmdLength(CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength)
     return (result);
 
 } /* End of RobotSimVerifyCmdLength() */
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*                                                                 */
-/* RobotSimGetCrc -- Output CRC                                     */
-/*                                                                 */
-/*                                                                 */
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-// void RobotSimGetCrc(const char *TableName)
-// {
-//     int32          status;
-//     uint32         Crc;
-//     CFE_TBL_Info_t TblInfoPtr;
-
-//     printf("RobotSimGetCrc() -- \n");
-
-//     status = CFE_TBL_GetInfo(&TblInfoPtr, TableName);
-//     if (status != CFE_SUCCESS)
-//     {
-//         CFE_ES_WriteToSysLog("Robot Sim: Error Getting Table Info");
-//     }
-//     else
-//     {
-//         Crc = TblInfoPtr.Crc;
-//         CFE_ES_WriteToSysLog("Robot Sim: CRC: 0x%08lX\n\n", (unsigned long)Crc);
-//     }
-
-//     return;
-
-// } /* End of RobotSimGetCrc */
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-/*                                                                 */
-/* RobotSimTblValidationFunc -- Verify contents of First Table      */
-/* buffer contents                                                 */
-/*                                                                 */
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-// int32 RobotSimTblValidationFunc(void *TblData)
-// {
-//     int32               ReturnCode = CFE_SUCCESS;
-//     RobotSimTable_t *TblDataPtr = (RobotSimTable_t *)TblData;
-
-//     printf("RobotSimTblValidationFunc() -- validating a table\n");
-
-//     /*
-//     ** Ros Table Validation
-//     */
-//     if (TblDataPtr->Int1 > ROBOT_SIM_TBL_ELEMENT_1_MAX)
-//     {
-//         /* First element is out of range, return an appropriate error code */
-//         ReturnCode = ROBOT_SIM_TABLE_OUT_OF_RANGE_ERR_CODE;
-//     }
-
-//     return ReturnCode;
-
-// } /* End of RobotSimTBLValidationFunc() */
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
-/*  Name:  RobotSimProcess                                                     */
-/*                                                                            */
-/*  Purpose:                                                                  */
-/*         This function Process Ground Station Command                       */
-/*                                                                            */
-/* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
-// int32 RobotSimProcess(const RobotSimProcessCmd_t *Msg)
-// {
-//     int32               status;
-//     RobotSimTable_t *TblPtr;
-//     const char *        TableName = "RobotSim.RobotSimTable";
-
-//     /* Ros Use of Table */
-
-//     printf("RobotSimProcess() --\n");
-
-//     status = CFE_TBL_GetAddress((void *)&TblPtr, RobotSimData.TblHandles[0]);
-
-//     if (status < CFE_SUCCESS)
-//     {
-//         CFE_ES_WriteToSysLog("Robot Sim: Fail to get table address: 0x%08lx", (unsigned long)status);
-//         return status;
-//     }
-
-//     CFE_ES_WriteToSysLog("Robot Sim: Table Value 1: %d  Value 2: %d", TblPtr->Int1, TblPtr->Int2);
-
-//     RobotSimGetCrc(TableName);
-
-//     status = CFE_TBL_ReleaseAddress(RobotSimData.TblHandles[0]);
-//     if (status != CFE_SUCCESS)
-//     {
-//         CFE_ES_WriteToSysLog("Robot Sim: Fail to release table address: 0x%08lx", (unsigned long)status);
-//         return status;
-//     }
-
-//     return CFE_SUCCESS;
-
-// } /* End of RobotSimProcessCC */

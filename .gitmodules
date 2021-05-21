@@ -14,14 +14,6 @@
 	path = apps/ci_lab
 	url = https://github.com/traclabs/ci_lab.git
     branch = main
-[submodule "apps/sample_app"]
-	path = apps/sample_app
-	url = https://github.com/traclabs/sample_app.git
-    branch = main
-[submodule "apps/sample_lib"]
-	path = apps/sample_lib
-	url = https://github.com/traclabs/sample_lib.git
-    branch = main
 [submodule "apps/sch_lab"]
 	path = apps/sch_lab
 	url = https://github.com/traclabs/sch_lab.git
