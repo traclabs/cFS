@@ -145,7 +145,7 @@ int32 RobotSimInit(void)
     RobotSimData.EventFilters[1].Mask    = 0x0000;
     RobotSimData.EventFilters[2].EventID = ROBOT_SIM_COMMANDNOP_INF_EID;
     RobotSimData.EventFilters[2].Mask    = 0x0000;
-    RobotSimData.EventFilters[3].EventID = ROBOT_SIM_COMMANDRST_INF_EID;
+    RobotSimData.EventFilters[3].EventID = ROBOT_SIM_COMMANDJNT_INF_EID;
     RobotSimData.EventFilters[3].Mask    = 0x0000;
     RobotSimData.EventFilters[4].EventID = ROBOT_SIM_INVALID_MSGID_ERR_EID;
     RobotSimData.EventFilters[4].Mask    = 0x0000;
@@ -266,10 +266,10 @@ void RobotSimProcessGroundCommand(CFE_SB_Buffer_t *SBBufPtr)
 
             break;
 
-        case ROBOT_SIM_RESET_COUNTERS_CC:
-            if (RobotSimVerifyCmdLength(&SBBufPtr->Msg, sizeof(RobotSimResetCountersCmd_t)))
+        case ROBOT_SIM_SET_JOINTS_CC:
+            if (RobotSimVerifyCmdLength(&SBBufPtr->Msg, sizeof(RobotSimJointStateCmd_t)))
             {
-                RobotSimResetCounters((RobotSimResetCountersCmd_t *)SBBufPtr);
+                RobotSimCmdJointState((RobotSimJointStateCmd_t *)SBBufPtr);
             }
 
             break;
@@ -333,36 +333,24 @@ int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 int32 RobotSimNoop(const RobotSimNoopCmd_t *Msg)
 {
-
     RobotSimData.CmdCounter++;
 
     CFE_EVS_SendEvent(ROBOT_SIM_COMMANDNOP_INF_EID, CFE_EVS_EventType_INFORMATION, "robot sim: NOOP command %s",
                       ROBOT_SIM_VERSION);
 
     return CFE_SUCCESS;
-
 } /* End of RobotSimNoop */
 
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
-/*  Name:  RobotSimResetCounters                                               */
-/*                                                                            */
-/*  Purpose:                                                                  */
-/*         This function resets all the global counter variables that are     */
-/*         part of the task telemetry.                                        */
-/*                                                                            */
-/* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
-int32 RobotSimResetCounters(const RobotSimResetCountersCmd_t *Msg)
+int32 RobotSimCmdJointState(const RobotSimJointStateCmd_t *Msg)
 {
+    RobotSimData.CmdCounter++;
 
-    RobotSimData.CmdCounter = 0;
-    RobotSimData.ErrCounter = 0;
-
-    CFE_EVS_SendEvent(ROBOT_SIM_COMMANDRST_INF_EID, CFE_EVS_EventType_INFORMATION, "robot sim: RESET command");
+    CFE_EVS_SendEvent(ROBOT_SIM_COMMANDJNT_INF_EID, CFE_EVS_EventType_INFORMATION, "robot sim: joint state command %s",
+                      ROBOT_SIM_VERSION);
 
     return CFE_SUCCESS;
-
-} /* End of RobotSimResetCounters() */
+}
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/

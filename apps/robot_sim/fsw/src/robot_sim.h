@@ -105,8 +105,8 @@ void  RobotSimProcessGroundCommand(CFE_SB_Buffer_t *SBBufPtr);
 
 int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg);
 
-int32 RobotSimResetCounters(const RobotSimResetCountersCmd_t *Msg);
 int32 RobotSimNoop(const RobotSimNoopCmd_t *Msg);
+int32 RobotSimCmdJointState(const RobotSimJointStateCmd_t *Msg);
 
 bool RobotSimVerifyCmdLength(CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength);
 

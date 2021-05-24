@@ -25,7 +25,7 @@
 [submodule "tools/cFS-GroundSystem"]
 	path = tools/cFS-GroundSystem
 	url = https://github.com/traclabs/cFS-GroundSystem.git
-    branch = main
+    branch = feature/robot-sim-app
 [submodule "tools/elf2cfetbl"]
 	path = tools/elf2cfetbl
 	url = https://github.com/traclabs/elf2cfetbl.git

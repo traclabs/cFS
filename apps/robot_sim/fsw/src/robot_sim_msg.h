@@ -34,8 +34,7 @@
 ** Robot Sim command codes
 */
 #define ROBOT_SIM_NOOP_CC           0
-#define ROBOT_SIM_RESET_COUNTERS_CC 1
-// #define ROBOT_SIM_PROCESS_CC        2
+#define ROBOT_SIM_SET_JOINTS_CC     1
 
 /*************************************************************************/
 
@@ -47,6 +46,18 @@ typedef struct
     CFE_MSG_CommandHeader_t CmdHeader; /**< \brief Command header */
 } RobotSimNoArgsCmd_t;
 
+typedef struct
+{
+    CFE_MSG_CommandHeader_t CmdHeader; /**< \brief Command header */
+    float joint0;
+    float joint1;
+    float joint2;
+    float joint3;
+    float joint4;
+    float joint5;
+    float joint6;
+} RobotSimJointCmd_t;
+
 /*
 ** The following commands all share the "NoArgs" format
 **
@@ -55,23 +66,17 @@ typedef struct
 ** of the handler function
 */
 typedef RobotSimNoArgsCmd_t RobotSimNoopCmd_t;
-typedef RobotSimNoArgsCmd_t RobotSimResetCountersCmd_t;
-typedef RobotSimNoArgsCmd_t RobotSimProcessCmd_t;
-typedef RobotSimNoArgsCmd_t RobotSimCmd_t;
+typedef RobotSimJointCmd_t  RobotSimJointStateCmd_t;
 
 /*************************************************************************/
 /*
 ** Type definition (Robot Sim housekeeping)
 */
 
-#define ROBOT_SIM_DOF 7
-
 typedef struct
 {
     uint8 index;
     float position;
-    // char index;
-    // char position;
 } RobotSimJoint_t;
 
 typedef struct
@@ -90,8 +95,6 @@ typedef struct
     uint8 CommandErrorCounter;
     uint8 CommandCounter;
     RobotSimSSRMS_t state;
-    // char str[3];
-    // RobotSimJoint_t joint_state[ROBOT_SIM_DOF];
 } RobotSimHkTlmPayload_t;
 
 typedef struct
