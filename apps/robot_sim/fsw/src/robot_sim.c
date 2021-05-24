@@ -310,13 +310,13 @@ int32 RobotSimReportHousekeeping(const CFE_MSG_CommandHeader_t *Msg)
     /*
     ** Send housekeeping telemetry packet...
     */
-    RobotSimData.HkTlm.Payload.state.joint0 = sin(RobotSimData.angle);
-    RobotSimData.HkTlm.Payload.state.joint1 = sin(RobotSimData.angle);
-    RobotSimData.HkTlm.Payload.state.joint2 = sin(RobotSimData.angle);
-    RobotSimData.HkTlm.Payload.state.joint3 = sin(RobotSimData.angle);
-    RobotSimData.HkTlm.Payload.state.joint4 = sin(RobotSimData.angle);
-    RobotSimData.HkTlm.Payload.state.joint5 = sin(RobotSimData.angle);
-    RobotSimData.HkTlm.Payload.state.joint6 = sin(RobotSimData.angle);
+    // RobotSimData.HkTlm.Payload.state.joint0 = sin(RobotSimData.angle);
+    // RobotSimData.HkTlm.Payload.state.joint1 = sin(RobotSimData.angle);
+    // RobotSimData.HkTlm.Payload.state.joint2 = sin(RobotSimData.angle);
+    // RobotSimData.HkTlm.Payload.state.joint3 = sin(RobotSimData.angle);
+    // RobotSimData.HkTlm.Payload.state.joint4 = sin(RobotSimData.angle);
+    // RobotSimData.HkTlm.Payload.state.joint5 = sin(RobotSimData.angle);
+    // RobotSimData.HkTlm.Payload.state.joint6 = sin(RobotSimData.angle);
     RobotSimData.angle += 0.043; // 5 deg per publish
     CFE_SB_TimeStampMsg(&RobotSimData.HkTlm.TlmHeader.Msg);
     CFE_SB_TransmitMsg(&RobotSimData.HkTlm.TlmHeader.Msg, true);
@@ -345,6 +345,23 @@ int32 RobotSimNoop(const RobotSimNoopCmd_t *Msg)
 int32 RobotSimCmdJointState(const RobotSimJointStateCmd_t *Msg)
 {
     RobotSimData.CmdCounter++;
+
+    RobotSimData.HkTlm.Payload.state.joint0 = Msg->joint0;
+    RobotSimData.HkTlm.Payload.state.joint1 = Msg->joint1; 
+    RobotSimData.HkTlm.Payload.state.joint2 = Msg->joint2;
+    RobotSimData.HkTlm.Payload.state.joint3 = Msg->joint3;
+    RobotSimData.HkTlm.Payload.state.joint4 = Msg->joint4;
+    RobotSimData.HkTlm.Payload.state.joint5 = Msg->joint5;
+    RobotSimData.HkTlm.Payload.state.joint6 = Msg->joint6;
+
+
+    printf("\njoint0: %f\n", Msg->joint0);
+    printf("joint1: %f\n", Msg->joint1);
+    printf("joint2: %f\n", Msg->joint2);
+    printf("joint3: %f\n", Msg->joint3);
+    printf("joint4: %f\n", Msg->joint4);
+    printf("joint5: %f\n", Msg->joint5);
+    printf("joint6: %f\n", Msg->joint6);
 
     CFE_EVS_SendEvent(ROBOT_SIM_COMMANDJNT_INF_EID, CFE_EVS_EventType_INFORMATION, "robot sim: joint state command %s",
                       ROBOT_SIM_VERSION);
