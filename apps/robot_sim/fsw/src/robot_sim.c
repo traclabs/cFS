@@ -41,6 +41,8 @@
 ** global data
 */
 RobotSimData_t RobotSimData;
+RobotSimData_t RobotSimGoal;
+float Kp = 0.005;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  * *  * * * * **/
 /* RobotSimMain() -- Application entry point and main process loop         */
@@ -346,22 +348,71 @@ int32 RobotSimCmdJointState(const RobotSimJointStateCmd_t *Msg)
 {
     RobotSimData.CmdCounter++;
 
-    RobotSimData.HkTlm.Payload.state.joint0 = Msg->joint0;
-    RobotSimData.HkTlm.Payload.state.joint1 = Msg->joint1; 
-    RobotSimData.HkTlm.Payload.state.joint2 = Msg->joint2;
-    RobotSimData.HkTlm.Payload.state.joint3 = Msg->joint3;
-    RobotSimData.HkTlm.Payload.state.joint4 = Msg->joint4;
-    RobotSimData.HkTlm.Payload.state.joint5 = Msg->joint5;
-    RobotSimData.HkTlm.Payload.state.joint6 = Msg->joint6;
+    RobotSimGoal.HkTlm.Payload.state.joint0 = Msg->joint0;
+    RobotSimGoal.HkTlm.Payload.state.joint1 = Msg->joint1; 
+    RobotSimGoal.HkTlm.Payload.state.joint2 = Msg->joint2;
+    RobotSimGoal.HkTlm.Payload.state.joint3 = Msg->joint3;
+    RobotSimGoal.HkTlm.Payload.state.joint4 = Msg->joint4;
+    RobotSimGoal.HkTlm.Payload.state.joint5 = Msg->joint5;
+    RobotSimGoal.HkTlm.Payload.state.joint6 = Msg->joint6;
+
+    float error0 = (RobotSimGoal.HkTlm.Payload.state.joint0 - RobotSimData.HkTlm.Payload.state.joint0);
+    float error1 = (RobotSimGoal.HkTlm.Payload.state.joint1 - RobotSimData.HkTlm.Payload.state.joint1);
+    float error2 = (RobotSimGoal.HkTlm.Payload.state.joint2 - RobotSimData.HkTlm.Payload.state.joint2);
+    float error3 = (RobotSimGoal.HkTlm.Payload.state.joint3 - RobotSimData.HkTlm.Payload.state.joint3);
+    float error4 = (RobotSimGoal.HkTlm.Payload.state.joint4 - RobotSimData.HkTlm.Payload.state.joint4);
+    float error5 = (RobotSimGoal.HkTlm.Payload.state.joint5 - RobotSimData.HkTlm.Payload.state.joint5);
+    float error6 = (RobotSimGoal.HkTlm.Payload.state.joint6 - RobotSimData.HkTlm.Payload.state.joint6);
 
 
-    printf("\njoint0: %f\n", Msg->joint0);
+    printf("\n---------------------\n");
+    printf("---------------------\n");
+    printf("---------------------\n");
+
+    printf("\nGoal:\n---------------------\n");
+    printf("joint0: %f\n", Msg->joint0);
     printf("joint1: %f\n", Msg->joint1);
     printf("joint2: %f\n", Msg->joint2);
     printf("joint3: %f\n", Msg->joint3);
     printf("joint4: %f\n", Msg->joint4);
     printf("joint5: %f\n", Msg->joint5);
     printf("joint6: %f\n", Msg->joint6);
+
+    printf("\nCurrent:\n---------------------\n");
+    printf("joint0: %f\n", RobotSimData.HkTlm.Payload.state.joint0);
+    printf("joint1: %f\n", RobotSimData.HkTlm.Payload.state.joint1);
+    printf("joint2: %f\n", RobotSimData.HkTlm.Payload.state.joint2);
+    printf("joint3: %f\n", RobotSimData.HkTlm.Payload.state.joint3);
+    printf("joint4: %f\n", RobotSimData.HkTlm.Payload.state.joint4);
+    printf("joint5: %f\n", RobotSimData.HkTlm.Payload.state.joint5);
+    printf("joint6: %f\n", RobotSimData.HkTlm.Payload.state.joint6);
+
+    printf("\nError:\n---------------------\n");
+    printf("joint0: %f\n", error0);
+    printf("joint1: %f\n", error1);
+    printf("joint2: %f\n", error2);
+    printf("joint3: %f\n", error3);
+    printf("joint4: %f\n", error4);
+    printf("joint5: %f\n", error5);
+    printf("joint6: %f\n", error6);
+
+    RobotSimData.HkTlm.Payload.state.joint0 = RobotSimData.HkTlm.Payload.state.joint0 + Kp * error0;
+    RobotSimData.HkTlm.Payload.state.joint1 = RobotSimData.HkTlm.Payload.state.joint1 + Kp * error1; 
+    RobotSimData.HkTlm.Payload.state.joint2 = RobotSimData.HkTlm.Payload.state.joint2 + Kp * error2;
+    RobotSimData.HkTlm.Payload.state.joint3 = RobotSimData.HkTlm.Payload.state.joint3 + Kp * error3;
+    RobotSimData.HkTlm.Payload.state.joint4 = RobotSimData.HkTlm.Payload.state.joint4 + Kp * error4;
+    RobotSimData.HkTlm.Payload.state.joint5 = RobotSimData.HkTlm.Payload.state.joint5 + Kp * error5;
+    RobotSimData.HkTlm.Payload.state.joint6 = RobotSimData.HkTlm.Payload.state.joint6 + Kp * error6;
+
+    printf("\nDesired:\n---------------------\n");
+    printf("joint0: %f\n", RobotSimData.HkTlm.Payload.state.joint0);
+    printf("joint1: %f\n", RobotSimData.HkTlm.Payload.state.joint1);
+    printf("joint2: %f\n", RobotSimData.HkTlm.Payload.state.joint2);
+    printf("joint3: %f\n", RobotSimData.HkTlm.Payload.state.joint3);
+    printf("joint4: %f\n", RobotSimData.HkTlm.Payload.state.joint4);
+    printf("joint5: %f\n", RobotSimData.HkTlm.Payload.state.joint5);
+    printf("joint6: %f\n", RobotSimData.HkTlm.Payload.state.joint6);
+
 
     CFE_EVS_SendEvent(ROBOT_SIM_COMMANDJNT_INF_EID, CFE_EVS_EventType_INFORMATION, "robot sim: joint state command %s",
                       ROBOT_SIM_VERSION);
