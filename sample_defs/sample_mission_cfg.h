@@ -197,7 +197,7 @@
 #define CFE_MISSION_TIME_EPOCH_HOUR           0
 #define CFE_MISSION_TIME_EPOCH_MINUTE         0
 #define CFE_MISSION_TIME_EPOCH_SECOND         0
-
+#define CFE_MISSION_TIME_EPOCH_MICROS         0
 
 /**
 **  \cfetimecfg Time File System Factor
