@@ -57,7 +57,7 @@
  *          of MIDs in the framework it will not scale so an alternative
  *          method of deconfliction is recommended.
  */
-#define CFE_PLATFORM_CMD_MID_BASE 0x1800
+#define CFE_PLATFORM_CMD_MID_BASE 0x1900
 
 /**
  * \brief Platform telemetry message ID base offset
@@ -69,7 +69,7 @@
  *
  * See #CFE_PLATFORM_CMD_MID_BASE for more information
  */
-#define CFE_PLATFORM_TLM_MID_BASE 0x0800
+#define CFE_PLATFORM_TLM_MID_BASE 0x0900
 
 /**
  * \brief "Global" command message ID base offset
