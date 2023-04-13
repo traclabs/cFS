@@ -45,3 +45,6 @@
 [submodule "apps/sbn"]
 	path = apps/sbn
 	url = https://github.com/traclabs/SBN.git
+[submodule "apps/robot_sim"]
+	path = apps/robot_sim
+	url = https://github.com/traclabs/robot_sim.git
