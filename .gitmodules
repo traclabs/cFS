@@ -48,3 +48,6 @@
 [submodule "apps/robot_sim"]
 	path = apps/robot_sim
 	url = https://github.com/traclabs/robot_sim.git
+[submodule "apps/ros_app"]
+	path = apps/ros_app
+	url = https://github.com/traclabs/ros_app.git
