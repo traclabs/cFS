@@ -50,4 +50,4 @@
 	url = https://github.com/traclabs/robot_sim.git
 [submodule "apps/cf"]
 	path = apps/cf
-	url = https://github.com/nasa/CF
+	url = https://github.com/traclabs/CF
