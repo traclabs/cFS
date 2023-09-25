@@ -48,7 +48,3 @@
 [submodule "apps/robot_sim"]
 	path = apps/robot_sim
 	url = git@github.com:traclabs/robot_sim.git
-[submodule "apps/ros_app"]
-	path = apps/ros_app
-	url = git@github.com:traclabs/ros_app.git
-	branch = submodule-cleanup
