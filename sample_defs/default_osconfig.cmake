@@ -99,7 +99,7 @@ set(OSAL_CONFIG_INCLUDE_SHELL                   FALSE)
 #  - If the user does not have permission to create elevated priority tasks, then the tasks will
 #    be created at the default priority (no error).
 #
-set(OSAL_CONFIG_DEBUG_PERMISSIVE_MODE           FALSE)
+set(OSAL_CONFIG_DEBUG_PERMISSIVE_MODE           TRUE)
 
 #
 # OSAL_CONFIG_DEBUG_PRINTF
