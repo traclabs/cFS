@@ -9,39 +9,39 @@
 [submodule "psp"]
 	path = psp
 	url = git@github.com:traclabs/PSP.git
-    branch = main
+	branch = main
 [submodule "apps/ci_lab"]
 	path = apps/ci_lab
 	url = git@github.com:traclabs/ci_lab.git
-    branch = main
+	branch = main
 [submodule "apps/sample_app"]
 	path = apps/sample_app
 	url = git@github.com:traclabs/sample_app.git
-    branch = main
+	branch = main
 [submodule "apps/sample_lib"]
 	path = apps/sample_lib
 	url = git@github.com:traclabs/sample_lib.git
-    branch = main
+	branch = main
 [submodule "apps/sch_lab"]
 	path = apps/sch_lab
 	url = git@github.com:traclabs/sch_lab.git
-    branch = main
+	branch = main
 [submodule "apps/to_lab"]
 	path = apps/to_lab
 	url = git@github.com:traclabs/to_lab.git
-    branch = main
+	branch = main
 [submodule "tools/cFS-GroundSystem"]
 	path = tools/cFS-GroundSystem
 	url = git@github.com:traclabs/cFS-GroundSystem.git
-    branch = main
+	branch = main
 [submodule "tools/elf2cfetbl"]
 	path = tools/elf2cfetbl
 	url = git@github.com:traclabs/elf2cfetbl.git
-    branch = main
+	branch = main
 [submodule "tools/tblCRCTool"]
 	path = tools/tblCRCTool
 	url = git@github.com:traclabs/tblCRCTool.git
-    branch = main
+	branch = main
 [submodule "apps/sbn"]
 	path = apps/sbn
 	url = git@github.com:traclabs/SBN.git
@@ -51,3 +51,4 @@
 [submodule "apps/ros_app"]
 	path = apps/ros_app
 	url = git@github.com:traclabs/ros_app.git
+	branch = submodule-cleanup
