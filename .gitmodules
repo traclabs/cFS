@@ -5,7 +5,7 @@
 [submodule "osal"]
 	path = osal
 	url = git@github.com:traclabs/osal.git
-	branch = main
+	branch = msg-queue-testing
 [submodule "psp"]
 	path = psp
 	url = git@github.com:traclabs/PSP.git
