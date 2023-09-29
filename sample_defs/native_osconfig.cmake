@@ -3,3 +3,5 @@
 # In this mode, enable the PERMISSIVE option, which allows for easier testing.
 #
 set(OSAL_CONFIG_DEBUG_PERMISSIVE_MODE TRUE)
+
+set(OSAL_CONFIG_DEBUG_PRINTF TRUE)
