@@ -5,7 +5,7 @@
 [submodule "osal"]
 	path = osal
 	url = ../osal.git
-	branch = main
+	branch = msg-queue-testing
 [submodule "psp"]
 	path = psp
 	url = ../PSP.git
