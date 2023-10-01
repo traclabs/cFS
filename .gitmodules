@@ -12,15 +12,7 @@
 	branch = main
 [submodule "apps/ci_lab"]
 	path = apps/ci_lab
-	url = ../ci_lab.git
-	branch = main
-[submodule "apps/sample_app"]
-	path = apps/sample_app
-	url = ../sample_app.git
-	branch = main
-[submodule "apps/sample_lib"]
-	path = apps/sample_lib
-	url = ../sample_lib.git
+	url = ../../nasa/ci_lab.git
 	branch = main
 [submodule "apps/sch_lab"]
 	path = apps/sch_lab
@@ -44,7 +36,7 @@
 	branch = main
 [submodule "apps/sbn"]
 	path = apps/sbn
-	url = ../SBN.git
+	url = ../../nasa/SBN.git
 [submodule "apps/robot_sim"]
 	path = apps/robot_sim
 	url = ../robot_sim.git

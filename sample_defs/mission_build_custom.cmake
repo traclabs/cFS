@@ -26,3 +26,15 @@ add_compile_options(
 add_definitions(
     -D_XOPEN_SOURCE=600
 )
+
+if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/config")
+  # Copy all .h files from "config" to "build/inc"
+  file(GLOB header_cfg_files "${CMAKE_CURRENT_LIST_DIR}/config/*.h")
+  file(COPY ${header_cfg_files} DESTINATION "${CMAKE_BINARY_DIR}/inc")
+
+  # TODO: If config/native/default_cpu1 exists, copy it as well (sub native, default, and cpu1 for appropriate variables)
+  # ${ARCH_BINARY_DIR}/inc
+  # ${MISSION_BINARY_DIR}/inc
+  # ${CMAKE_BINARY_DIR}/inc - 'build' folder
+  
+endif()
