@@ -1,53 +1,57 @@
 [submodule "cfe"]
 	path = cfe
-	url = https://github.com/traclabs/cFE.git
+	url = ../cFE.git
 	branch = main
 [submodule "osal"]
 	path = osal
-	url = https://github.com/traclabs/osal.git
-	branch = main
+	url = ../osal.git
+	branch = msg-queue-workaround
 [submodule "psp"]
 	path = psp
-	url = https://github.com/traclabs/PSP.git
-    branch = main
+	url = ../PSP.git
+	branch = main
 [submodule "apps/ci_lab"]
 	path = apps/ci_lab
-	url = https://github.com/traclabs/ci_lab.git
-    branch = main
+	url = ../ci_lab.git
+	branch = main
 [submodule "apps/sample_app"]
 	path = apps/sample_app
-	url = https://github.com/traclabs/sample_app.git
-    branch = main
+	url = ../sample_app.git
+	branch = main
 [submodule "apps/sample_lib"]
 	path = apps/sample_lib
-	url = https://github.com/traclabs/sample_lib.git
-    branch = main
+	url = ../sample_lib.git
+	branch = main
 [submodule "apps/sch_lab"]
 	path = apps/sch_lab
-	url = https://github.com/traclabs/sch_lab.git
-    branch = main
+	url = ../sch_lab.git
+	branch = main
 [submodule "apps/to_lab"]
 	path = apps/to_lab
-	url = https://github.com/traclabs/to_lab.git
-    branch = main
+	url = ../to_lab.git
+	branch = main
 [submodule "tools/cFS-GroundSystem"]
 	path = tools/cFS-GroundSystem
-	url = https://github.com/traclabs/cFS-GroundSystem.git
-    branch = main
+	url = ../cFS-GroundSystem.git
+	branch = main
 [submodule "tools/elf2cfetbl"]
 	path = tools/elf2cfetbl
-	url = https://github.com/traclabs/elf2cfetbl.git
-    branch = main
+	url = ../elf2cfetbl.git
+	branch = main
 [submodule "tools/tblCRCTool"]
 	path = tools/tblCRCTool
-	url = https://github.com/traclabs/tblCRCTool.git
-    branch = main
+	url = ../tblCRCTool.git
+	branch = main
 [submodule "apps/sbn"]
 	path = apps/sbn
-	url = https://github.com/traclabs/SBN.git
+	url = ../SBN.git
 [submodule "apps/robot_sim"]
 	path = apps/robot_sim
-	url = https://github.com/traclabs/robot_sim.git
+	url = ../robot_sim.git
 [submodule "apps/cf"]
 	path = apps/cf
-	url = https://github.com/traclabs/CF
+	url = ../CF
+[submodule "apps/ros_app"]
+	path = apps/ros_app
+	url = ../ros_app.git
+
