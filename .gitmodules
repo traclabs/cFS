@@ -8,7 +8,7 @@
 	branch = msg-queue-workaround
 [submodule "psp"]
 	path = psp
-	url = ../PSP.git
+	url = ../../nasa/PSP.git
 	branch = main
 [submodule "apps/ci_lab"]
 	path = apps/ci_lab
@@ -24,16 +24,13 @@
 	branch = main
 [submodule "tools/cFS-GroundSystem"]
 	path = tools/cFS-GroundSystem
-	url = ../cFS-GroundSystem.git
-	branch = main
+	url = ../../nasa/cFS-GroundSystem.git
 [submodule "tools/elf2cfetbl"]
 	path = tools/elf2cfetbl
-	url = ../elf2cfetbl.git
-	branch = main
+	url = ../../nasa/elf2cfetbl.git
 [submodule "tools/tblCRCTool"]
 	path = tools/tblCRCTool
-	url = ../tblCRCTool.git
-	branch = main
+	url = ../../nasa/tblCRCTool.git
 [submodule "apps/sbn"]
 	path = apps/sbn
 	url = ../../nasa/SBN.git
