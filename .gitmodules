@@ -4,12 +4,11 @@
 	branch = main
 [submodule "osal"]
 	path = osal
-	url = ../osal.git
-	branch = msg-queue-workaround
+	url = ../../nasa/osal.git
+	branch = main #msg-queue-workaround
 [submodule "psp"]
 	path = psp
-	url = ../PSP.git
-	branch = main
+	url = ../../nasa/PSP.git
 [submodule "apps/ci_lab"]
 	path = apps/ci_lab
 	url = ../../nasa/ci_lab.git
