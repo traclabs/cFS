@@ -23,15 +23,15 @@
 	branch = main
 [submodule "tools/cFS-GroundSystem"]
 	path = tools/cFS-GroundSystem
-	url = ../nasa/cFS-GroundSystem.git
+	url = ../cFS-GroundSystem.git
 	branch = main
 [submodule "tools/elf2cfetbl"]
 	path = tools/elf2cfetbl
-	url = ../nasa/elf2cfetbl.git
+	url = ../../nasa/elf2cfetbl.git
 	branch = main
 [submodule "tools/tblCRCTool"]
 	path = tools/tblCRCTool
-	url = ../nasa/tblCRCTool.git
+	url = ../../nasa/tblCRCTool.git
 	branch = main
 [submodule "apps/sbn"]
 	path = apps/sbn
