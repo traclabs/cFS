@@ -16,7 +16,7 @@ SBN_ConfTbl_t SBN_ConfTbl = {.ProtocolModules = {{/* [0] */
 
                              .Peers =
                                  {
-                                     {/* [0] */
+                                     {/* [0] - Self */
                                       .ProcessorID  = 1,
                                       .SpacecraftID = 0x42,
                                       .NetNum       = 0,
@@ -24,7 +24,7 @@ SBN_ConfTbl_t SBN_ConfTbl = {.ProtocolModules = {{/* [0] */
                                       .Filters      = {"Remap"},
                                       .Address      = "127.0.0.1:2234",
                                       .TaskFlags    = SBN_TASK_RECV},
-                                     {/* [1] */
+                                     {/* [1] - CPU2, unused in typical brash config */
                                       .ProcessorID  = 2,
                                       .SpacecraftID = 0x42,
                                       .NetNum       = 0,
@@ -32,7 +32,7 @@ SBN_ConfTbl_t SBN_ConfTbl = {.ProtocolModules = {{/* [0] */
                                       .Filters      = {"Remap"},
                                       .Address      = "127.0.0.1:2235",
                                       .TaskFlags    = SBN_TASK_POLL},
-                                     {/* [2] */
+                                     {/* [2] - rosfsw */
                                       .ProcessorID  = 3,
                                       .SpacecraftID = 0x42,
                                       .NetNum       = 0,

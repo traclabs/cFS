@@ -16,8 +16,7 @@ SBN_ConfTbl_t SBN_ConfTbl = {.ProtocolModules = {{/* [0] */
 
                              .Peers =
                                  {
-                                     {/* [0] */
-                                         // Since cpu2=PID2, this entry will be unused
+                                     {/* [0] - Corresponds to cpu1 and not used in typical brash config */
                                       .ProcessorID  = 1, 
                                       .SpacecraftID = 0x42,
                                       .NetNum       = 0,
@@ -25,7 +24,7 @@ SBN_ConfTbl_t SBN_ConfTbl = {.ProtocolModules = {{/* [0] */
                                       .Filters      = {"Remap"},
                                       .Address      = "10.5.0.3:2234",
                                       .TaskFlags    = SBN_TASK_RECV},
-                                     {/* [1] */
+                                     {/* [1] - Self */
                                       .ProcessorID  = 2,
                                       .SpacecraftID = 0x42,
                                       .NetNum       = 0,
@@ -33,8 +32,7 @@ SBN_ConfTbl_t SBN_ConfTbl = {.ProtocolModules = {{/* [0] */
                                       .Filters      = {"Remap"},
                                       .Address      = "10.5.0.3:2235",
                                       .TaskFlags    = SBN_TASK_POLL},
-                                     {/* [2] */
-                                         // PID=3 is always rosfsw
+                                     {/* [2] - rosfsw */
                                       .ProcessorID  = 3,
                                       .SpacecraftID = 0x42,
                                       .NetNum       = 0,
