@@ -16,21 +16,21 @@ SBN_ConfTbl_t SBN_ConfTbl = {.ProtocolModules = {{/* [0] */
 
                              .Peers =
                                  {
-                                     {/* [0] - Self */
-                                      .ProcessorID  = 1,
+                                     {/* [0] - Corresponds to cpu1 and not used in typical brash config */
+                                      .ProcessorID  = 1, 
                                       .SpacecraftID = 0x42,
                                       .NetNum       = 0,
                                       .ProtocolName = "UDP",
                                       .Filters      = {"Remap"},
-                                      .Address      = "127.0.0.1:2234",
+                                      .Address      = "10.5.0.3:2234",
                                       .TaskFlags    = SBN_TASK_RECV},
-                                     {/* [1] - CPU2, unused in typical brash config */
+                                     {/* [1] - Self */
                                       .ProcessorID  = 2,
                                       .SpacecraftID = 0x42,
                                       .NetNum       = 0,
                                       .ProtocolName = "UDP",
                                       .Filters      = {"Remap"},
-                                      .Address      = "127.0.0.1:2235",
+                                      .Address      = "10.5.0.3:2235",
                                       .TaskFlags    = SBN_TASK_POLL},
                                      {/* [2] - rosfsw */
                                       .ProcessorID  = 3,
@@ -38,7 +38,7 @@ SBN_ConfTbl_t SBN_ConfTbl = {.ProtocolModules = {{/* [0] */
                                       .NetNum       = 0,
                                       .ProtocolName = "UDP",
                                       .Filters      = {"Remap"},
-                                      .Address      = "127.0.0.1:2236",
+                                      .Address      = "10.5.0.4:2236",
                                       .TaskFlags    = SBN_TASK_POLL},
                                  },
                              .PeerCnt = 3};
