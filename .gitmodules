@@ -45,4 +45,7 @@
 [submodule "apps/ros_app"]
 	path = apps/ros_app
 	url = ../ros_app.git
+[submodule "apps/rover_app"]
+	path = apps/rover_app
+	url = ../rover_app.git
 
