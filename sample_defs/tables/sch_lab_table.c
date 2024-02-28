@@ -29,6 +29,7 @@
 #include "ros_app_msgids.h"
 #include "cf_msgids.h"
 #include "robot_sim_msgids.h"
+#include "rover_app_msgids.h"
 #include "sbn_msgids.h" 
 //#include "sbn_msgdefs.h"
 
@@ -65,6 +66,8 @@ SCH_LAB_ScheduleTable_t SCH_TBL_Structure = {.TickRate = 100,
                                                  // {CFE_SB_MSGID_WRAP_VALUE(ROBOT_SIM_HK_TLM_MID), 100},
                                                  {CFE_SB_MSGID_WRAP_VALUE(ROBOT_SIM_SEND_HK_MID), 100},
                                                  {CFE_SB_MSGID_WRAP_VALUE(ROBOT_SIM_HR_CONTROL_MID), 10},
+                                                 {CFE_SB_MSGID_WRAP_VALUE(ROVER_APP_SEND_HK_MID), 100},
+                                                 {CFE_SB_MSGID_WRAP_VALUE(ROVER_APP_HR_CONTROL_MID), 10},
                                                  // {CFE_SB_MSGID_WRAP_VALUE(SBN_CMD_MID), 100, SBN_SCH_WAKEUP_CC },
                                                  {CFE_SB_MSGID_WRAP_VALUE(CF_SEND_HK_MID), 100},
                                                  {CFE_SB_MSGID_WRAP_VALUE(CF_WAKE_UP_MID), 10},
