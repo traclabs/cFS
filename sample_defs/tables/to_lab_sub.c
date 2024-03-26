@@ -49,6 +49,7 @@
 #endif
 
 #include "cf_msgids.h"
+#include "sntp_msgids.h"
 
 TO_LAB_Subs_t TO_LAB_Subs = {.Subs = {/* CFS App Subscriptions */
                                       {CFE_SB_MSGID_WRAP_VALUE(TO_LAB_HK_TLM_MID), {0, 0}, 4},
@@ -62,6 +63,7 @@ TO_LAB_Subs_t TO_LAB_Subs = {.Subs = {/* CFS App Subscriptions */
                                       {CFE_SB_MSGID_WRAP_VALUE(ROS_APP_ROSOUT_FATAL_MID), {0, 0}, 4},
                                       {CFE_SB_MSGID_WRAP_VALUE(ROBOT_SIM_HK_TLM_MID), {0, 0}, 4},
                                       {CFE_SB_MSGID_WRAP_VALUE(ROVER_APP_HK_TLM_MID), {0, 0}, 4},
+                                      {CFE_SB_MSGID_WRAP_VALUE(SNTP_HK_TLM_MID), {0, 0}, 4},
 
                                       {CFE_SB_MSGID_WRAP_VALUE(CF_HK_TLM_MID), {0, 0}, 4},
                                       {CFE_SB_MSGID_WRAP_VALUE(CF_CH0_OUT_MID), {0, 0}, 4},

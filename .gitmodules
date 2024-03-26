@@ -49,3 +49,6 @@
 	path = apps/rover_app
 	url = ../rover_app.git
 
+[submodule "apps/sntp"]
+	path = apps/sntp
+	url = ../cfe_sntp.git
