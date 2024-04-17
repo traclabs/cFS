@@ -69,7 +69,7 @@
 # The MISSION_NAME will be compiled into the target build data structure
 # as well as being passed to "git describe" to filter the tags when building
 # the version string.
-SET(MISSION_NAME "SampleMission")
+SET(MISSION_NAME "Brash")
 
 # SPACECRAFT_ID gets compiled into the build data structure and the PSP may use it.
 # should be an integer.
@@ -86,7 +86,7 @@ SET(SPACECRAFT_ID 0x42)
 # This list is effectively appended to every TGTx_APPLIST in targets.cmake.  
 # Example:
 #list(APPEND MISSION_GLOBAL_APPLIST sample_app sample_lib)
-list(APPEND MISSION_GLOBAL_APPLIST ros_app sbn sbn_udp sbn_f_remap cf robot_sim rover_app)
+list(APPEND MISSION_GLOBAL_APPLIST ros_app sbn sbn_udp sbn_f_remap cf robot_sim rover_app sntp)
 
 # The "MISSION_GLOBAL_STATIC_APPLIST" is similar to MISSION_GLOBAL_APPLIST
 # but the apps are statically linked.  
