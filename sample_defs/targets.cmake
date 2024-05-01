@@ -86,7 +86,7 @@ SET(SPACECRAFT_ID 0x42)
 # This list is effectively appended to every TGTx_APPLIST in targets.cmake.  
 # Example:
 #list(APPEND MISSION_GLOBAL_APPLIST sample_app sample_lib)
-list(APPEND MISSION_GLOBAL_APPLIST ros_app sbn sbn_udp sbn_f_remap cf robot_sim rover_app sntp)
+list(APPEND MISSION_GLOBAL_APPLIST ros_app sbn sbn_udp sbn_f_remap cf robot_sim rover_app sntp canadarm_app)
 
 # The "MISSION_GLOBAL_STATIC_APPLIST" is similar to MISSION_GLOBAL_APPLIST
 # but the apps are statically linked.  

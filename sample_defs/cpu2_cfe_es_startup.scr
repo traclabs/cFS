@@ -5,6 +5,7 @@ CFE_APP, to_lab,      TO_LAB_AppMain,  TO_LAB_APP,   70,   16384, 0x0, 0;
 CFE_APP, sch_lab,     SCH_Lab_AppMain, SCH_LAB_APP,  80,   16384, 0x0, 0;
 CFE_APP, robot_sim,   RobotSimMain,    ROBOT_SIM,    50,   16384, 0x0, 0;
 CFE_APP, rover_app,   RoverAppMain,    ROVER_APP,    50,   16384, 0x0, 0;
+CFE_APP, canadarm_app,   CanadarmAppMain,    CANADARM_APP,    50,   16384, 0x0, 0;
 CFE_APP, cf,          CF_AppMain,      CF,           80,   16384, 0x0, 0;
 CFE_APP, sntp,        SNTP_Main,       SNTP,         80,   16384, 0x0, 0;
 !
