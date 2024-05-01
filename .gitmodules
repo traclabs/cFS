@@ -52,3 +52,6 @@
 [submodule "apps/sntp"]
 	path = apps/sntp
 	url = ../cfe_sntp.git
+[submodule "apps/canadarm_app"]
+	path = apps/canadarm_app
+	url = ../canadarm_app.git
