@@ -68,9 +68,9 @@ TO_LAB_Subs_t TO_LAB_Subs = {.Subs = {/* CFS App Subscriptions */
                                       {CFE_SB_MSGID_WRAP_VALUE(SNTP_HK_TLM_MID), {0, 0}, 4},
 
                                       {CFE_SB_MSGID_WRAP_VALUE(CF_HK_TLM_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(CF_CH0_OUT_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(CF_CH1_OUT_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(CF_CH2_OUT_MID), {0, 0}, 4},
+                                      {CFE_SB_MSGID_WRAP_VALUE(CF_CH0_OUT_MID), {0, 0}, 64},
+                                      {CFE_SB_MSGID_WRAP_VALUE(CF_CH1_OUT_MID), {0, 0}, 64},
+                                      {CFE_SB_MSGID_WRAP_VALUE(CF_CH2_OUT_MID), {0, 0}, 64},
 #if 0
         /* Add these if needed */
         {CFE_SB_MSGID_WRAP_VALUE(HS_HK_TLM_MID), {0,0}, 4},
