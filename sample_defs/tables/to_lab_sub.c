@@ -36,10 +36,6 @@
 #include "to_lab_msgids.h"
 #include "ci_lab_msgids.h"
 
-#include "ros_app_msgids.h"
-#include "robot_sim_msgids.h"
-#include "rover_app_msgids.h"
-
 #if 0
 #include "hs_msgids.h"
 #include "fm_msgids.h"
@@ -56,13 +52,6 @@ TO_LAB_Subs_t TO_LAB_Subs = {.Subs = {/* CFS App Subscriptions */
                                       {CFE_SB_MSGID_WRAP_VALUE(TO_LAB_DATA_TYPES_MID), {0, 0}, 4},
                                       {CFE_SB_MSGID_WRAP_VALUE(CI_LAB_HK_TLM_MID), {0, 0}, 4},
 
-                                      {CFE_SB_MSGID_WRAP_VALUE(ROS_APP_ROSOUT_DEBUG_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(ROS_APP_ROSOUT_INFO_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(ROS_APP_ROSOUT_WARN_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(ROS_APP_ROSOUT_ERROR_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(ROS_APP_ROSOUT_FATAL_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(ROBOT_SIM_HK_TLM_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(ROVER_APP_HK_TLM_MID), {0, 0}, 4},
                                       {CFE_SB_MSGID_WRAP_VALUE(SNTP_HK_TLM_MID), {0, 0}, 4},
 
                                       {CFE_SB_MSGID_WRAP_VALUE(CF_HK_TLM_MID), {0, 0}, 4},

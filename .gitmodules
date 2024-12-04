@@ -36,18 +36,9 @@
 [submodule "apps/sbn"]
 	path = apps/sbn
 	url = ../../nasa/SBN.git
-[submodule "apps/robot_sim"]
-	path = apps/robot_sim
-	url = ../robot_sim.git
 [submodule "apps/cf"]
 	path = apps/cf
 	url = ../CF
-[submodule "apps/ros_app"]
-	path = apps/ros_app
-	url = ../ros_app.git
-[submodule "apps/rover_app"]
-	path = apps/rover_app
-	url = ../rover_app.git
 
 [submodule "apps/sntp"]
 	path = apps/sntp
