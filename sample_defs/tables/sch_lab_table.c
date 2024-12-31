@@ -30,7 +30,7 @@
 #include "sntp_msgids.h"
 #include "sbn_msgids.h" 
 //#include "sbn_msgdefs.h"
-
+#include "gateway_app_msgids.h"
 
 #if 0
 #include "sc_msgids.h"
@@ -63,6 +63,8 @@ SCH_LAB_ScheduleTable_t SCH_TBL_Structure = {.TickRate = 100,
                                                  {CFE_SB_MSGID_WRAP_VALUE(CF_WAKE_UP_MID), 10},
                                                 
                                                  {CFE_SB_MSGID_WRAP_VALUE(SNTP_SEND_HK_MID), 100},
+                                                 {CFE_SB_MSGID_WRAP_VALUE(GATEWAY_APP_SEND_HK_MID), 100},
+                                                 {CFE_SB_MSGID_WRAP_VALUE(GATEWAY_APP_HR_CONTROL_MID), 10},
                                                  
 #if 0
                 {CFE_SB_MSGID_WRAP_VALUE(SC_SEND_HK_MID),       4, 0},
