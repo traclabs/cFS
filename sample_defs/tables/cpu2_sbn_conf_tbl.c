@@ -30,7 +30,7 @@ SBN_ConfTbl_t SBN_ConfTbl = {.ProtocolModules = {{/* [0] */
                                       .NetNum       = 0,
                                       .ProtocolName = "UDP",
                                       .Filters      = {"Remap"},
-                                      .Address      = "192.168.6.60:2235",
+                                      .Address      = "10.5.0.3:2235",
                                       .TaskFlags    = SBN_TASK_POLL},
                                      {/* [2] - rosfsw */
                                       .ProcessorID  = 3,
