@@ -67,10 +67,10 @@ TO_LAB_Subs_t TO_LAB_Subs = {.Subs = {/* CFS App Subscriptions */
         {CFE_SB_MSGID_WRAP_VALUE(DS_HK_TLM_MID), {0,0}, 4},
         {CFE_SB_MSGID_WRAP_VALUE(LC_HK_TLM_MID), {0,0}, 4},
 #endif
-                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_POSE_1_GROUND_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_POSE_2_GROUND_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_TWIST_1_FLIGHT_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_TWIST_2_FLIGHT_MID), {0, 0}, 4},                                      
+                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_TLM_1_GROUND_MID), {0, 0}, 4},
+                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_TLM_2_GROUND_MID), {0, 0}, 4},
+                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_CMD_1_FLIGHT_MID), {0, 0}, 4},
+                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_CMD_2_FLIGHT_MID), {0, 0}, 4},                                      
                                       /* cFE Core subscriptions */
                                       {CFE_SB_MSGID_WRAP_VALUE(CFE_ES_HK_TLM_MID), {0, 0}, 4},
 //                                      {CFE_SB_MSGID_WRAP_VALUE(CFE_EVS_HK_TLM_MID), {0, 0}, 4},
