@@ -55,10 +55,10 @@ TO_LAB_Subs_t TO_LAB_Subs = {.Subs = {/* CFS App Subscriptions */
 
                                       {CFE_SB_MSGID_WRAP_VALUE(SNTP_HK_TLM_MID), {0, 0}, 4},
 
-                                      {CFE_SB_MSGID_WRAP_VALUE(CF_HK_TLM_MID), {0, 0}, 4},
-                                      {CFE_SB_MSGID_WRAP_VALUE(CF_CH0_OUT_MID), {0, 0}, 64},
-                                      {CFE_SB_MSGID_WRAP_VALUE(CF_CH1_OUT_MID), {0, 0}, 64},
-                                      {CFE_SB_MSGID_WRAP_VALUE(CF_CH2_OUT_MID), {0, 0}, 64},
+                                       {CFE_SB_MSGID_WRAP_VALUE(CF_HK_TLM_MID), {0, 0}, 4},
+                                       {CFE_SB_MSGID_WRAP_VALUE(CF_CH0_OUT_MID), {0, 0}, 64},
+                                       {CFE_SB_MSGID_WRAP_VALUE(CF_CH1_OUT_MID), {0, 0}, 64},
+                                       {CFE_SB_MSGID_WRAP_VALUE(CF_CH2_OUT_MID), {0, 0}, 64},
 #if 0
         /* Add these if needed */
         {CFE_SB_MSGID_WRAP_VALUE(HS_HK_TLM_MID), {0,0}, 4},
@@ -82,8 +82,15 @@ TO_LAB_Subs_t TO_LAB_Subs = {.Subs = {/* CFS App Subscriptions */
                                       {CFE_SB_MSGID_WRAP_VALUE(CFE_ES_APP_TLM_MID), {0, 0}, 4},
                                       {CFE_SB_MSGID_WRAP_VALUE(CFE_ES_MEMSTATS_TLM_MID), {0, 0}, 4},
 
+                                      /* MSS split joint-state telemetry */
+                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_CANADARM_TLM_MID), {0, 0}, 4},
+                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_DEXTRE_TLM_MID), {0, 0}, 4},
+                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_MBS_TLM_MID), {0, 0}, 4},
+                                      {CFE_SB_MSGID_WRAP_VALUE(EDORAS_APP_SOLAR_TLM_MID), {0, 0}, 4},
+
                                       /* {CFE_SB_MSGID_RESERVED entry to mark the end of valid MsgIds */
                                       {CFE_SB_MSGID_RESERVED, {0, 0}, 0}
                                       }};
 
 CFE_TBL_FILEDEF(TO_LAB_Subs, TO_LAB_APP.TO_LAB_Subs, TO Lab Sub Tbl, to_lab_sub.tbl)
+
